@@ -3,6 +3,7 @@ VK =
 	space: 32
 	O: 79
 	a: 97
+	d: 100
 	h: 104
 	j: 106
 	k: 107
@@ -35,6 +36,7 @@ gtree =
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
 				when VK.a then @append()
+				when VK.d then @delete()
 				when VK.h then @moveToParent()
 				when VK.k then @moveToPrev()
 				when VK.j then @moveToNext()
@@ -49,6 +51,15 @@ gtree =
 		if node
 			@$curNode.children('.gtree-children').append(node.$el)
 			@moveTo(node.$el)
+
+	delete: ->
+		$node = @$curNode
+		@moveToNext()
+		if @$curNode is $node
+			@moveToPrev()
+			if @$curNode is $node
+				@moveToParent()
+		$node.remove()
 
 	moveToParent: ->
 		@moveTo(@$curNode.parents('.gtree-node:first'))
