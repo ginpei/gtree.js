@@ -9,6 +9,7 @@ VK =
 	k: 107
 	l: 108
 	o: 111
+	z: 122
 
 CLS =
 	collapsed: 'gtree-collapsed'
@@ -42,6 +43,7 @@ gtree =
 				when VK.j then @moveToNext()
 				when VK.l then @moveToChild()
 				when VK.o then @insert()
+				when VK.z then @toggle()
 				when VK.O then @insertBefore()
 				when VK.return then @edit()
 				when VK.space then @toggle()
