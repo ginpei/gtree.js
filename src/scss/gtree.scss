@@ -8,4 +8,12 @@
 	&-children {
 		display: table-cell;
 	}
+	&-node.gtree-collapsed &-children {
+		&::before {
+			content: "...";
+		}
+		> * {
+			display: none;
+		}
+	}
 }

@@ -1,11 +1,13 @@
 VK =
 	return: 13
+	space: 32
 	h: 104
 	j: 106
 	k: 107
 	l: 108
 
 CLS =
+	collapsed: 'gtree-collapsed'
 	current: 'gtree-current'
 
 gtree =
@@ -34,6 +36,7 @@ gtree =
 				when VK.j then @moveToNext()
 				when VK.l then @moveToChild()
 				when VK.return then @edit()
+				when VK.space then @toggle()
 
 	moveToParent: ->
 		@moveTo(@$curNode.parents('.gtree-node:first'))
@@ -56,6 +59,9 @@ gtree =
 		body = window.prompt 'Input the body', body
 		if body
 			$body.text(body)
+
+	toggle: ->
+		@$curNode.toggleClass(CLS.collapsed) if @$curNode.find('.gtree-node').length > 0
 
 Node = gtree.Node = (options)->
 	if @ instanceof Node
