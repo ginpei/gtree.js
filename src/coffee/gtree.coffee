@@ -41,13 +41,8 @@ gtree =
 				when VK.space then @toggle()
 
 	append: ->
-		body = window.prompt('Input the body for the new node')
-		if body
-			node = new gtree.Node
-				data:
-					body: body
-			node.render()
-			@$curNode.children('.gtree-children').append(node.$el)
+		node = @createNew()
+		@$curNode.children('.gtree-children').append(node.$el) if node
 
 	moveToParent: ->
 		@moveTo(@$curNode.parents('.gtree-node:first'))
@@ -73,6 +68,17 @@ gtree =
 
 	toggle: ->
 		@$curNode.toggleClass(CLS.collapsed) if @$curNode.find('.gtree-node').length > 0
+
+	createNew: ->
+		body = window.prompt('Input the body for the new node')
+		if body
+			node = new gtree.Node
+				data:
+					body: body
+			node.render()
+			return node
+		else
+			return null
 
 Node = gtree.Node = (options)->
 	if @ instanceof Node
