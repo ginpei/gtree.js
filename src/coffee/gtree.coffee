@@ -1,11 +1,13 @@
 VK =
 	return: 13
 	space: 32
+	O: 79
 	a: 97
 	h: 104
 	j: 106
 	k: 107
 	l: 108
+	o: 111
 
 CLS =
 	collapsed: 'gtree-collapsed'
@@ -37,6 +39,8 @@ gtree =
 				when VK.k then @moveToPrev()
 				when VK.j then @moveToNext()
 				when VK.l then @moveToChild()
+				when VK.o then @insert()
+				when VK.O then @insertBefore()
 				when VK.return then @edit()
 				when VK.space then @toggle()
 
@@ -60,6 +64,18 @@ gtree =
 			@$curNode.removeClass(CLS.current)
 			$node.addClass(CLS.current)
 			@$curNode = $node
+
+	insert: ->
+		node = @createNew()
+		if node
+			@$curNode.after(node.$el)
+			@moveTo(node.$el)
+
+	insertBefore: ->
+		node = @createNew()
+		if node
+			@$curNode.before(node.$el)
+			@moveTo(node.$el)
 
 	edit: ->
 		$body = @$curNode.find('>.gtree-body')
