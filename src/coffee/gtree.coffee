@@ -1,4 +1,5 @@
 VK =
+	return: 13
 	h: 104
 	j: 106
 	k: 107
@@ -32,6 +33,7 @@ gtree =
 				when VK.k then @moveToPrev()
 				when VK.j then @moveToNext()
 				when VK.l then @moveToChild()
+				when VK.return then @edit()
 
 	moveToParent: ->
 		@moveTo(@$curNode.parents('.gtree-node:first'))
@@ -47,6 +49,13 @@ gtree =
 			@$curNode.removeClass(CLS.current)
 			$node.addClass(CLS.current)
 			@$curNode = $node
+
+	edit: ->
+		$body = @$curNode.find('>.gtree-body')
+		body = $body.text()
+		body = window.prompt 'Input the body', body
+		if body
+			$body.text(body)
 
 Node = gtree.Node = (options)->
 	if @ instanceof Node
