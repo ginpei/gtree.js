@@ -1,6 +1,7 @@
 VK =
 	return: 13
 	space: 32
+	a: 97
 	h: 104
 	j: 106
 	k: 107
@@ -31,12 +32,22 @@ gtree =
 
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
+				when VK.a then @append()
 				when VK.h then @moveToParent()
 				when VK.k then @moveToPrev()
 				when VK.j then @moveToNext()
 				when VK.l then @moveToChild()
 				when VK.return then @edit()
 				when VK.space then @toggle()
+
+	append: ->
+		body = window.prompt('Input the body for the new node')
+		if body
+			node = new gtree.Node
+				data:
+					body: body
+			node.render()
+			@$curNode.children('.gtree-children').append(node.$el)
 
 	moveToParent: ->
 		@moveTo(@$curNode.parents('.gtree-node:first'))
