@@ -1,7 +1,9 @@
 VK =
 	return: 13
 	space: 32
+	C: 67
 	O: 79
+	S: 83
 	a: 97
 	d: 100
 	h: 104
@@ -44,7 +46,9 @@ gtree =
 				when VK.l then @moveToChild()
 				when VK.o then @insert()
 				when VK.z then @toggle()
+				when VK.C then @edit()
 				when VK.O then @insertBefore()
+				when VK.S then @edit()
 				when VK.return then @edit()
 				when VK.space then @toggle()
 
