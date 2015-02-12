@@ -1,0 +1,11 @@
+.gtree {
+	&-node {
+		display: table;
+	}
+	&-body {
+		display: table-cell;
+	}
+	&-children {
+		display: table-cell;
+	}
+}

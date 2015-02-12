@@ -1,0 +1,22 @@
+.gtree {
+	padding: 0;
+
+	&-node {
+		background-color: #fff;
+		border-left: solid 1px #090;
+		padding: 4px;
+	}
+	&-body {
+		padding: 4px;
+	}
+	&-node.gtree-current {
+		border-color: #f00;
+	}
+	&-node.gtree-current > &-body {
+		background-color: #fee;
+		text-decoration: underline;
+	}
+	&-children {
+		padding: 4px;
+	}
+}
