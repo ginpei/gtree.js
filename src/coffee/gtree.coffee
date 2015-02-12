@@ -53,6 +53,8 @@ gtree =
 			@moveTo(node.$el)
 
 	delete: ->
+		return if @isRoot()
+
 		$node = @$curNode
 		@moveToNext()
 		if @$curNode is $node
@@ -77,12 +79,16 @@ gtree =
 			@$curNode = $node
 
 	insert: ->
+		return if @isRoot()
+
 		node = @createNew()
 		if node
 			@$curNode.after(node.$el)
 			@moveTo(node.$el)
 
 	insertBefore: ->
+		return if @isRoot()
+
 		node = @createNew()
 		if node
 			@$curNode.before(node.$el)
@@ -108,6 +114,9 @@ gtree =
 			return node
 		else
 			return null
+
+	isRoot: ($node = @$curNode)->
+		return $node.parent().hasClass('gtree')
 
 Node = gtree.Node = (options)->
 	if @ instanceof Node
