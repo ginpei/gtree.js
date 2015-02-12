@@ -42,7 +42,9 @@ gtree =
 
 	append: ->
 		node = @createNew()
-		@$curNode.children('.gtree-children').append(node.$el) if node
+		if node
+			@$curNode.children('.gtree-children').append(node.$el)
+			@moveTo(node.$el)
 
 	moveToParent: ->
 		@moveTo(@$curNode.parents('.gtree-node:first'))
