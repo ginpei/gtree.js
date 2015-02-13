@@ -2,6 +2,7 @@
   "name": "gtree",
   "dependencies": {
     "jquery": "~2.1.3",
-    "jade": "~1.9.2"
+    "jade": "~1.9.2",
+    "react": "~0.12.2"
   }
 }
