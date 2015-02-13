@@ -18,7 +18,7 @@ path =
 		jslib: [
 			'bower_components/jquery/dist/jquery.min.js'
 			'bower_components/jade/runtime.js'
-			'bower_components/react/react.min.js'
+			'bower_components/react/react.js'
 		]
 		template: 'src/jade/**/*.jade'
 	dest:
