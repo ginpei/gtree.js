@@ -19,19 +19,17 @@ CLS =
 
 gtree =
 	start: ->
-		root = new gtree.Node data: body: 'Root'
-		root.render()
-		root.$el.appendTo('#gtree')
-
-		child1 = (new gtree.Node data: body: 'Child 1').render()
-		root.append(child1)
-		child2 = (new gtree.Node data: body: 'Child 2').render()
-		root.append(child2)
-		child3 = (new gtree.Node data: body: 'Child 3').render()
-		root.append(child3)
-
-		child1_1 = (new gtree.Node data: {body: '1-1'}).render()
-		child1.append(child1_1)
+		data = {
+			body:'Root'
+			children: [
+				{ body:'Child 1', children: [
+					{ body:'1-1' }
+				]}
+				{ body:'Child 2' }
+				{ body:'Child 3' }
+			]
+		}
+		root = React.render(React.createElement(Node2, data), document.getElementById('gtree'))
 
 		@$curNode = $('#gtree .gtree-node:first')
 		@$curNode.addClass(CLS.current)
@@ -152,6 +150,26 @@ $.extend gtree.Node.prototype,
 	setParent: (node)->
 		@parent = node
 		return @
+
+Node2 = React.createClass
+	getDefaultProps: ->
+		children: []
+		body: ''
+
+	# getInitialState: ->
+
+	render: ->
+		React.createElement('li', { className:'gtree-node' }, @_renderBody(), @_renderChildren())
+
+	_renderBody: ->
+		React.createElement('div', { className:'gtree-body' }, @props.body)
+
+	_renderChildren: ->
+		React.createElement('ul', { className:'gtree-children' }, @_createChildElements(@props.children))
+
+	_createChildElements: (children)->
+		children.map (node, index)->
+			React.createElement(Node2, $.extend({}, node, {key:index}))
 
 window.gtree = gtree
 
