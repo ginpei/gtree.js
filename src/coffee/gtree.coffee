@@ -17,6 +17,8 @@ CLS =
 	collapsed: 'gtree-collapsed'
 	current: 'gtree-current'
 
+currentNode = null
+
 gtree =
 	start: ->
 		data = {
@@ -30,9 +32,9 @@ gtree =
 			]
 		}
 		root = React.render(React.createElement(Node2, data), document.getElementById('gtree'))
+		root.setCurrent()
 
 		@$curNode = $('#gtree .gtree-node:first')
-		@$curNode.addClass(CLS.current)
 
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
@@ -156,10 +158,13 @@ Node2 = React.createClass
 		children: []
 		body: ''
 
-	# getInitialState: ->
+	getInitialState: ->
+		current: false
 
 	render: ->
-		React.createElement('li', { className:'gtree-node' }, @_renderBody(), @_renderChildren())
+		className = 'gtree-node'
+		className += ' gtree-current' if @state.current
+		React.createElement('li', { className }, @_renderBody(), @_renderChildren())
 
 	_renderBody: ->
 		React.createElement('div', { className:'gtree-body' }, @props.body)
@@ -170,6 +175,11 @@ Node2 = React.createClass
 	_createChildElements: (children)->
 		children.map (node, index)->
 			React.createElement(Node2, $.extend({}, node, {key:index}))
+
+	setCurrent: ->
+		currentNode.setState(current:false) if currentNode
+		currentNode = @
+		@setState(current:true)
 
 window.gtree = gtree
 
