@@ -19,139 +19,155 @@ CLS =
 
 gtree =
 	start: ->
-		root = new gtree.Node data: body: 'Root'
-		root.render()
-		root.$el.appendTo('#gtree')
-
-		child1 = (new gtree.Node data: body: 'Child 1').render()
-		root.append(child1)
-		child2 = (new gtree.Node data: body: 'Child 2').render()
-		root.append(child2)
-		child3 = (new gtree.Node data: body: 'Child 3').render()
-		root.append(child3)
-
-		child1_1 = (new gtree.Node data: {body: '1-1'}).render()
-		child1.append(child1_1)
-
-		@$curNode = $('#gtree .gtree-node:first')
-		@$curNode.addClass(CLS.current)
+		tree = React.render(React.createElement(Tree), document.getElementById('gtree'))
+		tree.setData
+			body:'Root'
+			current: true
+			children: [
+				{ body:'Child 1', children:[{ body:'1-1' }] }
+				{ body:'Child 2' }
+				{ body:'Child 3' }
+			]
 
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
-				when VK.a then @append()
-				when VK.d then @delete()
-				when VK.h then @moveToParent()
-				when VK.k then @moveToPrev()
-				when VK.j then @moveToNext()
-				when VK.l then @moveToChild()
-				when VK.o then @insert()
-				when VK.z then @toggle()
-				when VK.C then @edit()
-				when VK.O then @insertBefore()
-				when VK.S then @edit()
-				when VK.return then @edit()
-				when VK.space then @toggle()
+				when VK.a then tree.append()
+				when VK.d then tree.delete()
+				when VK.h then tree.moveToParent()
+				when VK.k then tree.moveToPrev()
+				when VK.j then tree.moveToNext()
+				when VK.l then tree.moveToChild()
+				when VK.o then tree.insert()
+				when VK.z then tree.toggle()
+				when VK.C then tree.edit()
+				when VK.O then tree.insertBefore()
+				when VK.S then tree.edit()
+				when VK.return then tree.edit()
+				when VK.space then tree.toggle()
 
-	append: ->
-		node = @createNew()
-		if node
-			@$curNode.children('.gtree-children').append(node.$el)
-			@moveTo(node.$el)
-
-	delete: ->
-		return if @isRoot()
-
-		$node = @$curNode
-		@moveToNext()
-		if @$curNode is $node
-			@moveToPrev()
-			if @$curNode is $node
-				@moveToParent()
-		$node.remove()
-
-	moveToParent: ->
-		@moveTo(@$curNode.parents('.gtree-node:first'))
-	moveToPrev: ->
-		@moveTo(@$curNode.prev())
-	moveToNext: ->
-		@moveTo(@$curNode.next())
-	moveToChild: ->
-		@moveTo(@$curNode.find('.gtree-node:first'))
-
-	moveTo: ($node)->
-		if $node.length > 0
-			@$curNode.removeClass(CLS.current)
-			$node.addClass(CLS.current)
-			@$curNode = $node
-
-	insert: ->
-		return if @isRoot()
-
-		node = @createNew()
-		if node
-			@$curNode.after(node.$el)
-			@moveTo(node.$el)
-
-	insertBefore: ->
-		return if @isRoot()
-
-		node = @createNew()
-		if node
-			@$curNode.before(node.$el)
-			@moveTo(node.$el)
-
-	edit: ->
-		$body = @$curNode.find('>.gtree-body')
-		body = $body.text()
-		body = window.prompt 'Input the body', body
-		if body
-			$body.text(body)
-
-	toggle: ->
-		@$curNode.toggleClass(CLS.collapsed) if @$curNode.find('.gtree-node').length > 0
-
-	createNew: ->
-		body = window.prompt('Input the body for the new node')
-		if body
-			node = new gtree.Node
-				data:
-					body: body
-			node.render()
-			return node
-		else
-			return null
-
-	isRoot: ($node = @$curNode)->
-		return $node.parent().hasClass('gtree')
-
-Node = gtree.Node = (options)->
-	if @ instanceof Node
-		@.initialize(options)
-	else
-		new Node(options)
-
-$.extend gtree.Node.prototype,
-	initialize: (options = {})->
-		@parent = options.parent
-		@index = options.index
-		@data = options.data
-		@children = []
-		return @
+Tree = React.createClass
+	getInitialState:->
+		data: null
 
 	render: ->
-		@$el = $(window.template(@data))
-		@$childrenContainer = @$el.children( '.gtree-children')
-		return @
+		React.createElement('ul', @_getAttr(), @_renderChildren())
 
-	append: (node)->
-		@children.push(node)
-		node.setParent(@)
-		@$childrenContainer.append(node.$el)
-		return @
+	_getAttr: ->
+		className: 'gtree-children'
 
-	setParent: (node)->
-		@parent = node
-		return @
+	_renderChildren: ->
+		React.createElement(Node, @state.data) if @state.data
+
+	setData: (data)->
+		data = @curNode = @_initializeData(data)
+		@setState({data})
+
+	_initializeData: (node, parent, index)->
+		node.index = index
+		node.parent = parent
+		node.children = [] unless node.children
+
+		node.children.map (child, index)=>
+			@_initializeData(child, node, index)
+
+		return node
+
+	moveToParent: ->
+		@_moveTo(@curNode.parent)
+
+	moveToChild: ->
+		@_moveTo(@curNode.children?[0])
+
+	moveToPrev: ->
+		@_moveTo(@curNode.parent?.children?[@curNode.index-1])
+
+	moveToNext: ->
+		@_moveTo(@curNode.parent?.children?[@curNode.index+1])
+
+	_moveTo: (next)->
+		if next
+			@curNode.current = false
+			next.current = true
+			@curNode = next
+			@setState(data:@state.data)
+
+	edit: ->
+		body = window.prompt 'Input the body', @curNode.body
+		if body
+			@curNode.body = body
+			@setState(data:@state.data)
+
+	toggle: ->
+		@curNode.collapsed = !@curNode.collapsed
+		@setState(data:@state.data)
+
+	append: ->
+		body = @_promptNew()
+		if body
+			cur = @curNode
+			next = @_initializeData({body}, cur, cur.children.length)
+			cur.children.push(next)
+			@_moveTo(next)
+
+	insert: (before)->
+		body = @_promptNew()
+		if body
+			cur = @curNode
+			index = cur.index + (if before then 0 else 1)
+			parent = cur.parent
+			next = @_initializeData({body}, parent, index)
+
+			bros = parent.children
+			bros2 = bros.splice(index)
+			bros.push(next)
+			bros2.forEach (node, index)->
+				node.index++
+				bros.push(node)
+
+			@_moveTo(next)
+
+	insertBefore: ->
+		@insert(true)
+
+	_promptNew: ->
+		window.prompt('Input the body for the new node')
+
+	delete: ->
+		old = @curNode
+		@moveToNext()
+		if @curNode is old
+			@moveToPrev()
+			if @curNode is old
+				@moveToParent()
+
+		if @curNode isnt old
+			children = old.parent.children
+			children.splice(old.index, 1)
+			children.map (node, index) -> node.index = index
+			@setState(data:@state.data)
+
+Node = React.createClass
+	getDefaultProps: ->
+		body: ''
+		current: false
+		collapsed: false
+		children: []
+
+	render: ->
+		className = 'gtree-node'
+		className += ' gtree-current' if @props.current
+		className += ' gtree-collapsed' if @props.collapsed
+		React.createElement('li', { className }, @_renderBody(), @_renderChildren())
+
+	_renderBody: ->
+		React.createElement('div', { className:'gtree-body' }, @props.body)
+
+	_renderChildren: ->
+		React.createElement('ul', { className:'gtree-children' }, @_createChildElements(@props.children))
+
+	_createChildElements: (children)->
+		children.map (node, index)->
+			React.createElement(Node, $.extend({}, node, {key:index}))
 
 window.gtree = gtree
 
