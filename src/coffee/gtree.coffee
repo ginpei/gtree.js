@@ -29,8 +29,6 @@ gtree =
 				{ body:'Child 3' }
 			]
 
-		@$curNode = $('#gtree .gtree-node:first')
-
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
 				when VK.a then tree.append()
@@ -46,107 +44,6 @@ gtree =
 				when VK.S then tree.edit()
 				when VK.return then tree.edit()
 				when VK.space then tree.toggle()
-
-	append: ->
-		node = @createNew()
-		if node
-			@$curNode.children('.gtree-children').append(node.$el)
-			@moveTo(node.$el)
-
-	delete: ->
-		return if @isRoot()
-
-		$node = @$curNode
-		@moveToNext()
-		if @$curNode is $node
-			@moveToPrev()
-			if @$curNode is $node
-				@moveToParent()
-		$node.remove()
-
-	moveToParent: ->
-		@moveTo(@$curNode.parents('.gtree-node:first'))
-	moveToPrev: ->
-		@moveTo(@$curNode.prev())
-	moveToNext: ->
-		@moveTo(@$curNode.next())
-	moveToChild: ->
-		@moveTo(@$curNode.find('.gtree-node:first'))
-
-	moveTo: ($node)->
-		if $node.length > 0
-			@$curNode.removeClass(CLS.current)
-			$node.addClass(CLS.current)
-			@$curNode = $node
-
-	insert: ->
-		return if @isRoot()
-
-		node = @createNew()
-		if node
-			@$curNode.after(node.$el)
-			@moveTo(node.$el)
-
-	insertBefore: ->
-		return if @isRoot()
-
-		node = @createNew()
-		if node
-			@$curNode.before(node.$el)
-			@moveTo(node.$el)
-
-	edit: ->
-		$body = @$curNode.find('>.gtree-body')
-		body = $body.text()
-		body = window.prompt 'Input the body', body
-		if body
-			$body.text(body)
-
-	toggle: ->
-		@$curNode.toggleClass(CLS.collapsed) if @$curNode.find('.gtree-node').length > 0
-
-	createNew: ->
-		body = window.prompt('Input the body for the new node')
-		if body
-			node = new gtree.Node
-				data:
-					body: body
-			node.render()
-			return node
-		else
-			return null
-
-	isRoot: ($node = @$curNode)->
-		return $node.parent().hasClass('gtree')
-
-Node = gtree.Node = (options)->
-	if @ instanceof Node
-		@.initialize(options)
-	else
-		new Node(options)
-
-$.extend gtree.Node.prototype,
-	initialize: (options = {})->
-		@parent = options.parent
-		@index = options.index
-		@data = options.data
-		@children = []
-		return @
-
-	render: ->
-		@$el = $(window.template(@data))
-		@$childrenContainer = @$el.children( '.gtree-children')
-		return @
-
-	append: (node)->
-		@children.push(node)
-		node.setParent(@)
-		@$childrenContainer.append(node.$el)
-		return @
-
-	setParent: (node)->
-		@parent = node
-		return @
 
 Node2 = React.createClass
 	getDefaultProps: ->
