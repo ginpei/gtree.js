@@ -188,13 +188,13 @@ Tree = React.createClass
 		data = @curNode = @_initializeData(data)
 		@setState({data})
 
-	_initializeData: (node, index, parent)->
+	_initializeData: (node, parent, index)->
 		node.index = index
 		node.parent = parent
 		node.children = [] unless node.children
 
 		node.children.map (child, index)=>
-			@_initializeData(child, index, node)
+			@_initializeData(child, node, index)
 
 		return node
 
@@ -231,7 +231,7 @@ Tree = React.createClass
 		body = window.prompt('Input the body for the new node')
 		if body
 			cur = @curNode
-			next = @_initializeData({body}, cur.children.length, cur)
+			next = @_initializeData({body}, cur, cur.children.length)
 			cur.children.push(next)
 			@_moveTo(next)
 
