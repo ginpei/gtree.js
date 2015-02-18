@@ -42,7 +42,7 @@ gtree =
 				when VK.o then tree.insert()
 				when VK.z then tree.toggle()
 				when VK.C then tree.edit()
-				when VK.O then @insertBefore()
+				when VK.O then tree.insertBefore()
 				when VK.S then tree.edit()
 				when VK.return then tree.edit()
 				when VK.space then tree.toggle()
@@ -240,6 +240,23 @@ Tree = React.createClass
 		if body
 			cur = @curNode
 			index = cur.index+1
+			parent = cur.parent
+			next = @_initializeData({body}, parent, index)
+
+			bros = parent.children
+			bros2 = bros.splice(index)
+			bros.push(next)
+			bros2.forEach (node, index)->
+				node.index++
+				bros.push(node)
+
+			@_moveTo(next)
+
+	insertBefore: ->
+		body = @_promptNew()
+		if body
+			cur = @curNode
+			index = cur.index
 			parent = cur.parent
 			next = @_initializeData({body}, parent, index)
 
