@@ -228,12 +228,15 @@ Tree = React.createClass
 		@setState(data:@state.data)
 
 	append: ->
-		body = window.prompt('Input the body for the new node')
+		body = @_promptNew()
 		if body
 			cur = @curNode
 			next = @_initializeData({body}, cur, cur.children.length)
 			cur.children.push(next)
 			@_moveTo(next)
+
+	_promptNew: ->
+		window.prompt('Input the body for the new node')
 
 	delete: ->
 		old = @curNode
