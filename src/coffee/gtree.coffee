@@ -40,12 +40,12 @@ gtree =
 				when VK.j then tree.moveToNext()
 				when VK.l then tree.moveToChild()
 				when VK.o then @insert()
-				when VK.z then @toggle()
+				when VK.z then tree.toggle()
 				when VK.C then tree.edit()
 				when VK.O then @insertBefore()
 				when VK.S then tree.edit()
 				when VK.return then tree.edit()
-				when VK.space then @toggle()
+				when VK.space then tree.toggle()
 
 	append: ->
 		node = @createNew()
@@ -152,11 +152,13 @@ Node2 = React.createClass
 	getDefaultProps: ->
 		body: ''
 		current: false
+		collapsed: false
 		children: []
 
 	render: ->
 		className = 'gtree-node'
 		className += ' gtree-current' if @props.current
+		className += ' gtree-collapsed' if @props.collapsed
 		React.createElement('li', { className }, @_renderBody(), @_renderChildren())
 
 	_renderBody: ->
@@ -218,6 +220,10 @@ Tree = React.createClass
 		if body
 			@curNode.body = body
 			@setState(data:@state.data)
+
+	toggle: ->
+		@curNode.collapsed = !@curNode.collapsed
+		@setState(data:@state.data)
 
 window.gtree = gtree
 
