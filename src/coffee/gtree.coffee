@@ -36,8 +36,8 @@ gtree =
 				when VK.a then @append()
 				when VK.d then @delete()
 				when VK.h then tree.moveToParent()
-				when VK.k then @moveToPrev()
-				when VK.j then @moveToNext()
+				when VK.k then tree.moveToPrev()
+				when VK.j then tree.moveToNext()
 				when VK.l then tree.moveToChild()
 				when VK.o then @insert()
 				when VK.z then @toggle()
@@ -195,17 +195,23 @@ Tree = React.createClass
 		return node
 
 	moveToParent: ->
-		@moveTo(@curNode.parent)
+		@_moveTo(@curNode.parent)
 
 	moveToChild: ->
-		@moveTo(@curNode.children?[0])
+		@_moveTo(@curNode.children?[0])
 
-	moveTo: (next)->
+	moveToPrev: ->
+		@_moveTo(@curNode.parent?.children?[@curNode.index-1])
+
+	moveToNext: ->
+		@_moveTo(@curNode.parent?.children?[@curNode.index+1])
+
+	_moveTo: (next)->
 		if next
 			@curNode.current = false
 			next.current = true
-			@setState(data:@state.data)
 			@curNode = next
+			@setState(data:@state.data)
 
 window.gtree = gtree
 
