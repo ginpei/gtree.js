@@ -17,22 +17,18 @@ CLS =
 	collapsed: 'gtree-collapsed'
 	current: 'gtree-current'
 
-currentNode = null
-
 gtree =
 	start: ->
-		data = {
-			body:'Root'
-			children: [
-				{ body:'Child 1', children: [
-					{ body:'1-1' }
-				]}
-				{ body:'Child 2' }
-				{ body:'Child 3' }
-			]
-		}
-		root = React.render(React.createElement(Node2, data), document.getElementById('gtree'))
-		root.setCurrent()
+		tree = React.render(React.createElement(Tree), document.getElementById('gtree'))
+		tree.setState
+			data:
+				body:'Root'
+				current: true
+				children: [
+					{ body:'Child 1', children:[{ body:'1-1' }] }
+					{ body:'Child 2' }
+					{ body:'Child 3' }
+				]
 
 		@$curNode = $('#gtree .gtree-node:first')
 
@@ -155,15 +151,13 @@ $.extend gtree.Node.prototype,
 
 Node2 = React.createClass
 	getDefaultProps: ->
-		children: []
 		body: ''
-
-	getInitialState: ->
 		current: false
+		children: []
 
 	render: ->
 		className = 'gtree-node'
-		className += ' gtree-current' if @state.current
+		className += ' gtree-current' if @props.current
 		React.createElement('li', { className }, @_renderBody(), @_renderChildren())
 
 	_renderBody: ->
@@ -176,10 +170,18 @@ Node2 = React.createClass
 		children.map (node, index)->
 			React.createElement(Node2, $.extend({}, node, {key:index}))
 
-	setCurrent: ->
-		currentNode.setState(current:false) if currentNode
-		currentNode = @
-		@setState(current:true)
+Tree = React.createClass
+	getInitialState:->
+		data: null
+
+	render: ->
+		React.createElement('ul', @_getAttr(), @_renderChildren())
+
+	_getAttr: ->
+		className: 'gtree-children'
+
+	_renderChildren: ->
+		React.createElement(Node2, @state.data) if @state.data
 
 window.gtree = gtree
 
