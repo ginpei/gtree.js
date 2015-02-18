@@ -33,7 +33,7 @@ gtree =
 
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
-				when VK.a then @append()
+				when VK.a then tree.append()
 				when VK.d then tree.delete()
 				when VK.h then tree.moveToParent()
 				when VK.k then tree.moveToPrev()
@@ -191,9 +191,9 @@ Tree = React.createClass
 	_initializeData: (node, index, parent)->
 		node.index = index
 		node.parent = parent
-		node.children?.map (child, index)=>
+		node.children = [] unless node.children
+		node.children.map (child, index)=>
 			@_initializeData(child, index, node)
-
 		return node
 
 	moveToParent: ->
@@ -224,6 +224,14 @@ Tree = React.createClass
 	toggle: ->
 		@curNode.collapsed = !@curNode.collapsed
 		@setState(data:@state.data)
+
+	append: ->
+		body = window.prompt('Input the body for the new node')
+		if body
+			cur = @curNode
+			next = @_initializeData({body}, cur.children.length, cur)
+			cur.children.push(next)
+			@_moveTo(next)
 
 	delete: ->
 		old = @curNode
