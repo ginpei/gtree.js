@@ -45,7 +45,7 @@ gtree =
 				when VK.return then tree.edit()
 				when VK.space then tree.toggle()
 
-Node2 = React.createClass
+Node = React.createClass
 	getDefaultProps: ->
 		body: ''
 		current: false
@@ -66,7 +66,7 @@ Node2 = React.createClass
 
 	_createChildElements: (children)->
 		children.map (node, index)->
-			React.createElement(Node2, $.extend({}, node, {key:index}))
+			React.createElement(Node, $.extend({}, node, {key:index}))
 
 Tree = React.createClass
 	getInitialState:->
@@ -79,7 +79,7 @@ Tree = React.createClass
 		className: 'gtree-children'
 
 	_renderChildren: ->
-		React.createElement(Node2, @state.data) if @state.data
+		React.createElement(Node, @state.data) if @state.data
 
 	setData: (data)->
 		data = @curNode = @_initializeData(data)
