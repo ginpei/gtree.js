@@ -34,7 +34,7 @@ gtree =
 		$(document).on 'keypress', (event)=>
 			switch event.keyCode
 				when VK.a then @append()
-				when VK.d then @delete()
+				when VK.d then tree.delete()
 				when VK.h then tree.moveToParent()
 				when VK.k then tree.moveToPrev()
 				when VK.j then tree.moveToNext()
@@ -224,6 +224,20 @@ Tree = React.createClass
 	toggle: ->
 		@curNode.collapsed = !@curNode.collapsed
 		@setState(data:@state.data)
+
+	delete: ->
+		old = @curNode
+		@moveToNext()
+		if @curNode is old
+			@moveToPrev()
+			if @curNode is old
+				@moveToParent()
+
+		if @curNode isnt old
+			children = old.parent.children
+			children.splice(old.index, 1)
+			children.map (node, index) -> node.index = index
+			@setState(data:@state.data)
 
 window.gtree = gtree
 
