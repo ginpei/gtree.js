@@ -192,8 +192,10 @@ Tree = React.createClass
 		node.index = index
 		node.parent = parent
 		node.children = [] unless node.children
+
 		node.children.map (child, index)=>
 			@_initializeData(child, index, node)
+
 		return node
 
 	moveToParent: ->
