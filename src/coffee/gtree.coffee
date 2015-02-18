@@ -235,11 +235,11 @@ Tree = React.createClass
 			cur.children.push(next)
 			@_moveTo(next)
 
-	insert: ->
+	insert: (before)->
 		body = @_promptNew()
 		if body
 			cur = @curNode
-			index = cur.index+1
+			index = cur.index + (if before then 0 else 1)
 			parent = cur.parent
 			next = @_initializeData({body}, parent, index)
 
@@ -253,21 +253,7 @@ Tree = React.createClass
 			@_moveTo(next)
 
 	insertBefore: ->
-		body = @_promptNew()
-		if body
-			cur = @curNode
-			index = cur.index
-			parent = cur.parent
-			next = @_initializeData({body}, parent, index)
-
-			bros = parent.children
-			bros2 = bros.splice(index)
-			bros.push(next)
-			bros2.forEach (node, index)->
-				node.index++
-				bros.push(node)
-
-			@_moveTo(next)
+		@insert(true)
 
 	_promptNew: ->
 		window.prompt('Input the body for the new node')
