@@ -20,15 +20,14 @@ CLS =
 gtree =
 	start: ->
 		tree = React.render(React.createElement(Tree), document.getElementById('gtree'))
-		tree.setState
-			data:
-				body:'Root'
-				current: true
-				children: [
-					{ body:'Child 1', children:[{ body:'1-1' }] }
-					{ body:'Child 2' }
-					{ body:'Child 3' }
-				]
+		tree.setData
+			body:'Root'
+			current: true
+			children: [
+				{ body:'Child 1', children:[{ body:'1-1' }] }
+				{ body:'Child 2' }
+				{ body:'Child 3' }
+			]
 
 		@$curNode = $('#gtree .gtree-node:first')
 
@@ -182,6 +181,9 @@ Tree = React.createClass
 
 	_renderChildren: ->
 		React.createElement(Node2, @state.data) if @state.data
+
+	setData: (data)->
+		@setState({data})
 
 window.gtree = gtree
 
