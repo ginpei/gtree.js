@@ -35,7 +35,7 @@ gtree =
 			switch event.keyCode
 				when VK.a then @append()
 				when VK.d then @delete()
-				when VK.h then @moveToParent()
+				when VK.h then tree.moveToParent()
 				when VK.k then @moveToPrev()
 				when VK.j then @moveToNext()
 				when VK.l then tree.moveToChild()
@@ -194,11 +194,15 @@ Tree = React.createClass
 
 		return node
 
+	moveToParent: ->
+		@moveTo(@curNode.parent)
+
 	moveToChild: ->
-		cur = @curNode
-		next = cur.children?[0]
+		@moveTo(@curNode.children?[0])
+
+	moveTo: (next)->
 		if next
-			cur.current = false
+			@curNode.current = false
 			next.current = true
 			@setState(data:@state.data)
 			@curNode = next
