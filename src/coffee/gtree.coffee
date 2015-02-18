@@ -41,10 +41,10 @@ gtree =
 				when VK.l then tree.moveToChild()
 				when VK.o then @insert()
 				when VK.z then @toggle()
-				when VK.C then @edit()
+				when VK.C then tree.edit()
 				when VK.O then @insertBefore()
-				when VK.S then @edit()
-				when VK.return then @edit()
+				when VK.S then tree.edit()
+				when VK.return then tree.edit()
 				when VK.space then @toggle()
 
 	append: ->
@@ -211,6 +211,12 @@ Tree = React.createClass
 			@curNode.current = false
 			next.current = true
 			@curNode = next
+			@setState(data:@state.data)
+
+	edit: ->
+		body = window.prompt 'Input the body', @curNode.body
+		if body
+			@curNode.body = body
 			@setState(data:@state.data)
 
 window.gtree = gtree
