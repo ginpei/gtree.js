@@ -10,7 +10,7 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				{ body:'Child 3' }
 			]
 		operator:
-			_values: 'current path body collapsed parent'
+			_values: 'current path body collapsed'
 
 			initialize: ->
 				@_values.split(' ').forEach (name, index)=>
@@ -23,6 +23,3 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				return @
 
 			pathString: (node)-> node.body
-			firstChild: (node)-> node.children?[0]
-			prev: (node)-> node.parent?.children?[node.index-1]
-			next: (node)-> node.parent?.children?[node.index+1]
