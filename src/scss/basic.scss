@@ -7,21 +7,27 @@
 
 	&-node {
 		background-color: #fff;
-		border-left: solid 1px #090;
+		border-left: solid 1px #ccc;
 		padding: 4px;
 	}
 	&-body {
 		opacity: 0.3;
 		padding: 4px;
 	}
-	&-node.gtree-current {
+	&-node.gtree-on-path,
+	&-node.gtree-on-path > &-children > &-node {
+		border-color: #090;
+	}
+	&-node.gtree-node.gtree-current,
+	&-node.gtree-on-path > &-children > &-node.gtree-node.gtree-current {
 		border-color: #f00;
 	}
 	&-node.gtree-current > &-body {
 		background-color: #fee;
 		text-decoration: underline;
 	}
-	&-node.gtree-path > &-body {
+	&-node.gtree-on-path > &-body,
+	&-node.gtree-on-path > &-children > &-node.gtree-node > &-body {
 		opacity: 1;
 	}
 	&-children {
