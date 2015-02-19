@@ -19,31 +19,54 @@ CLS =
 
 gtree =
 	start: ->
-		tree = React.render(React.createElement(Tree), document.getElementById('gtree'))
-		tree.setData
-			body:'Root'
-			current: true
-			children: [
-				{ body:'Child 1', children:[{ body:'1-1' }] }
-				{ body:'Child 2' }
-				{ body:'Child 3' }
-			]
+		manager = TreeManager()
+		manager.init
+			el: '#gtree'
+			data:
+				body:'Root'
+				current: true
+				children: [
+					{ body:'Child 1', children:[{ body:'1-1' }] }
+					{ body:'Child 2' }
+					{ body:'Child 3' }
+				]
 
-		$(document).on 'keypress', (event)=>
-			switch event.keyCode
-				when VK.a then tree.append()
-				when VK.d then tree.delete()
-				when VK.h then tree.moveToParent()
-				when VK.k then tree.moveToPrev()
-				when VK.j then tree.moveToNext()
-				when VK.l then tree.moveToChild()
-				when VK.o then tree.insert()
-				when VK.z then tree.toggle()
-				when VK.C then tree.edit()
-				when VK.O then tree.insertBefore()
-				when VK.S then tree.edit()
-				when VK.return then tree.edit()
-				when VK.space then tree.toggle()
+TreeManager = (options)->
+	if @ instanceof TreeManager
+		return @constructor(options)
+	else
+		return new TreeManager(options)
+
+TreeManager.prototype.constructor = (options)->
+	$(document).on 'keypress', (event)=>
+		switch event.keyCode
+			when VK.a then @curTree and @curTree.append()
+			when VK.d then @curTree and @curTree.delete()
+			when VK.h then @curTree and @curTree.moveToParent()
+			when VK.k then @curTree and @curTree.moveToPrev()
+			when VK.j then @curTree and @curTree.moveToNext()
+			when VK.l then @curTree and @curTree.moveToChild()
+			when VK.o then @curTree and @curTree.insert()
+			when VK.z then @curTree and @curTree.toggle()
+			when VK.C then @curTree and @curTree.edit()
+			when VK.O then @curTree and @curTree.insertBefore()
+			when VK.S then @curTree and @curTree.edit()
+			when VK.return then @curTree and @curTree.edit()
+			when VK.space then @curTree and @curTree.toggle()
+
+	return @
+
+TreeManager.prototype.init = (options)->
+	el = options.el
+	if typeof el is 'string'
+		el = document.querySelector(el)
+
+	tree = React.render(React.createElement(Tree), el)
+	tree.setData(options.data)
+
+	@curTree = tree unless @curTree
+
+	return tree
 
 Tree = React.createClass
 	getInitialState:->
