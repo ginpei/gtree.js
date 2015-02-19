@@ -9,3 +9,17 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				{ body:'Child 2' }
 				{ body:'Child 3' }
 			]
+		operator:
+			_values: 'body'
+
+			initialize: ->
+				@_values.split(' ').forEach (name, index)=>
+					@[name] = (node, value)->
+						if arguments.length < 2
+							return node[name]
+						else
+							node[name] = value
+							return @
+				return @
+
+			pathString: (node)-> node.body

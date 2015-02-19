@@ -4,7 +4,8 @@ Tree = React.createClass
 		path: []
 
 	render: ->
-		pathString = (@state.path.map (node, index) -> node.body).reverse().join(' - ')
+		operator = @operator
+		pathString = (@state.path.map (node, index) -> operator.pathString(node)).reverse().join(' - ')
 
 		React.createElement('div', null,
 			React.createElement('div', { className:'gtree-path' }, pathString)
@@ -31,9 +32,10 @@ Tree = React.createClass
 		return node
 
 	edit: ->
-		body = window.prompt 'Input the body', @curNode.body
+		operator = @operator
+		body = window.prompt 'Input the body', operator.body(@curNode)
 		if body
-			@curNode.body = body
+			operator.body(@curNode, body)
 			@setState(data:@state.data)
 
 	toggle: ->
