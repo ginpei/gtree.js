@@ -19,6 +19,7 @@ TreeManager.prototype.VK =
 	l: 108
 	o: 111
 	p: 112
+	y: 121
 	z: 122
 
 TreeManager.prototype.constructor = (options)->
@@ -35,6 +36,7 @@ TreeManager.prototype.constructor = (options)->
 			when VK.l then tree.moveToChild()
 			when VK.o then tree.insert()
 			when VK.p then tree.paste()
+			when VK.y then tree.yunk()
 			when VK.z then tree.toggle()
 			when VK.C then tree.edit()
 			when VK.O then tree.insertBefore()

@@ -124,6 +124,9 @@ Tree = React.createClass
 	_promptNew: ->
 		window.prompt('Input the body for the new node')
 
+	yunk: ->
+		@yunkedNode = @curNode
+
 	paste: ->
 		@insert(@_cloneNode(@yunkedNode)) if @yunkedNode
 
