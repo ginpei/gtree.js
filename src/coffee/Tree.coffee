@@ -99,12 +99,17 @@ Tree = React.createClass
 			operator.append(cur, next)
 			@_moveTo(next)
 
-	insert: (_back)->
+	insert: (before)->
 		operator = @operator
 		body = @_promptNew()
 		if body
-			next = @_initializeData(operator.build({body}))
-			operator.insert(@curNode, next, _back)
+			cur = @curNode
+			index = cur.index + (if before then 0 else 1)
+			parent = operator.parent(cur)
+			next = @_initializeData(operator.build({body}), parent, index)
+
+			operator.insert(parent, next, index)
+
 			@_moveTo(next)
 
 	insertBefore: ->
