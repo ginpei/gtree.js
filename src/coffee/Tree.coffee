@@ -125,20 +125,20 @@ Tree = React.createClass
 		window.prompt('Input the body for the new node')
 
 	paste: ->
-		@insert(@_clone(@yunkedNode)) if @yunkedNode
+		@insert(@_cloneNode(@yunkedNode)) if @yunkedNode
 
 	pasteBefore: ->
-		@insert(@_clone(@yunkedNode), true) if @yunkedNode
+		@insert(@_cloneNode(@yunkedNode), true) if @yunkedNode
 
-	_clone: (obj, parent)->
+	_cloneNode: (obj, parent)->
 		cloned = {}
 
 		for key of obj
 			value = obj[key]
 			if value instanceof Array
-				clonedValue = value.map (node, index)=> @_clone(node, obj)
+				clonedValue = value.map (node, index)=> @_cloneNode(node, obj)
 			else if typeof value is 'object' and key isnt 'parent'
-				clonedValue = @_clone(value, cloned)
+				clonedValue = @_cloneNode(value, cloned)
 			else
 				clonedValue = value
 			cloned[key] = clonedValue
