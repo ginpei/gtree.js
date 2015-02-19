@@ -10,10 +10,10 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				{ body:'Child 3' }
 			]
 		operator:
-			values: 'current path body collapsed parent'
+			_values: 'current path body collapsed parent'
 
 			initialize: ->
-				@values.split(' ').forEach (name, index)=>
+				@_values.split(' ').forEach (name, index)=>
 					@[name] = (node, value)->
 						if arguments.length < 2
 							return node[name]
