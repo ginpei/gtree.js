@@ -1,17 +1,3 @@
-gtree =
-	start: ->
-		manager = TreeManager()
-		manager.init
-			el: '#gtree'
-			data:
-				body:'Root'
-				current: true
-				children: [
-					{ body:'Child 1', children:[{ body:'1-1' }] }
-					{ body:'Child 2' }
-					{ body:'Child 3' }
-				]
-
 TreeManager = (options)->
 	if @ instanceof TreeManager
 		return @constructor(options)
@@ -189,6 +175,15 @@ Node = React.createClass
 		children.map (node, index)->
 			React.createElement(Node, $.extend({}, node, {key:index}))
 
-window.gtree = gtree
-
-$ -> gtree.start()
+$ ->
+	manager = TreeManager()
+	manager.init
+		el: '#gtree'
+		data:
+			body:'Root'
+			current: true
+			children: [
+				{ body:'Child 1', children:[{ body:'1-1' }] }
+				{ body:'Child 2' }
+				{ body:'Child 3' }
+			]
