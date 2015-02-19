@@ -19,7 +19,8 @@ Node = React.createClass
 
 	_createChildElements: (children)->
 		children.map (node, index)->
-			React.createElement(gtree.Node, $.extend({}, node, {key:index}))
+			node.index = index
+			React.createElement(gtree.Node, node)
 
 window.gtree = {} unless window.gtree
 window.gtree.Node = Node

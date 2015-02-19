@@ -15,7 +15,6 @@ path =
 		html: 'src/html/**/*.html'
 		js: 'src/coffee/**/*.coffee'
 		jslib: [
-			'bower_components/jquery/dist/jquery.min.js'
 			'bower_components/react/react.js'
 		]
 	dest:

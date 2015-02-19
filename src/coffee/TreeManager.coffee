@@ -20,7 +20,7 @@ TreeManager.prototype.VK =
 	z: 122
 
 TreeManager.prototype.constructor = (options)->
-	$(document).on 'keypress', (event)=>
+	document.addEventListener 'keypress', (event)=>
 		VK = @VK
 		switch event.keyCode
 			when VK.a then @curTree and @curTree.append()
