@@ -69,13 +69,13 @@ Tree = React.createClass
 			next.current = true
 			@curNode = next
 
-			@_setPath(next)
+			@_preparePath(next)
 			@setState(data:@state.data, path:@state.path)
 
 	_resetPath: ->
 		@state.path.forEach (node, index)-> node.path = false
 
-	_setPath: (next)->
+	_preparePath: (next)->
 		curPath = @state.path
 		curPath.splice(0)
 		pathNode = next
