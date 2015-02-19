@@ -91,24 +91,27 @@ Tree = React.createClass
 	# manipulations
 
 	append: ->
-		operator = @operator
 		body = @_promptNew()
 		if body
 			cur = @curNode
-			next = @_initializeData(operator.build({body}), cur, cur.children.length)
-			operator.append(cur, next)
+			next = @_initializeData({body}, cur, cur.children.length)
+			cur.children.push(next)
 			@_moveTo(next)
 
 	insert: (before)->
-		operator = @operator
 		body = @_promptNew()
 		if body
 			cur = @curNode
 			index = cur.index + (if before then 0 else 1)
-			parent = operator.parent(cur)
-			next = @_initializeData(operator.build({body}), parent, index)
+			parent = cur.parent
+			next = @_initializeData({body}, parent, index)
 
-			operator.insert(parent, next, index)
+			bros = parent.children
+			bros2 = bros.splice(index)
+			bros.push(next)
+			bros2.forEach (node, index)->
+				node.index++
+				bros.push(node)
 
 			@_moveTo(next)
 
@@ -119,8 +122,6 @@ Tree = React.createClass
 		window.prompt('Input the body for the new node')
 
 	delete: ->
-		operator = @operator
-
 		old = @curNode
 		@moveToNext()
 		if @curNode is old
@@ -129,7 +130,9 @@ Tree = React.createClass
 				@moveToParent()
 
 		if @curNode isnt old
-			operator.delete(old)
+			children = old.parent.children
+			children.splice(old.index, 1)
+			children.map (node, index) -> node.index = index
 			@setState(data:@state.data)
 
 window.gtree = {} unless window.gtree
