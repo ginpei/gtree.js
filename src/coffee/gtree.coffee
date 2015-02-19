@@ -30,10 +30,18 @@ document.addEventListener 'DOMContentLoaded', (event)->
 			next: (node)-> node.parent?.children?[node.index+1]
 
 			append: (node, child)-> node.children.push(child)
-			insert: (parent, node, index)->
+			insert: (node, next, _back)->
+				parent = node.parent
 				bros = parent.children
+				index = node.index + (if _back then 0 else 1)
+
+				next.parent = node.parent
+				next.index = index
+
 				bros2 = bros.splice(index)
-				bros.push(node)
+
+				bros.push(next)
+
 				bros2.forEach (node, index)->
 					node.index++
 					bros.push(node)
