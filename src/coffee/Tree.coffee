@@ -1,9 +1,15 @@
 Tree = React.createClass
 	getInitialState:->
 		data: null
+		path: []
 
 	render: ->
-		React.createElement('ul', @_getAttr(), @_renderChildren())
+		pathString = (@state.path.map (node, index) -> node.body).reverse().join(' - ')
+
+		React.createElement('div', null,
+			React.createElement('div', { className:'gtree-path' }, pathString)
+			React.createElement('ul', @_getAttr(), @_renderChildren())
+		)
 
 	_getAttr: ->
 		className: 'gtree-children'
@@ -18,7 +24,7 @@ Tree = React.createClass
 		data = @curNode = @_initializeData(data)
 		data.current = true
 		data.path = true
-		@setState({data})
+		@setState({data, path:[data]})
 
 	_initializeData: (node, parent, index)->
 		node.index = index
@@ -64,19 +70,19 @@ Tree = React.createClass
 			@curNode = next
 
 			@_setPath(next)
-			@setState(data:@state.data)
+			@setState(data:@state.data, path:@state.path)
 
 	_resetPath: ->
-		@curPath?.forEach (node, index)-> node.path = false
+		@state.path.forEach (node, index)-> node.path = false
 
 	_setPath: (next)->
-		curPath = []
+		curPath = @state.path
+		curPath.splice(0)
 		pathNode = next
 		while pathNode
 			curPath.push(pathNode)
 			pathNode.path = true
 			pathNode = pathNode.parent
-		@curPath = curPath
 
 	# --------------------------------
 	# manipulations
