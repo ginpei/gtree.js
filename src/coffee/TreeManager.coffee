@@ -21,21 +21,23 @@ TreeManager.prototype.VK =
 
 TreeManager.prototype.constructor = (options)->
 	document.addEventListener 'keypress', (event)=>
+		tree = @curTree
+		return unless tree
 		VK = @VK
 		switch event.keyCode
-			when VK.a then @curTree and @curTree.append()
-			when VK.d then @curTree and @curTree.delete()
-			when VK.h then @curTree and @curTree.moveToParent()
-			when VK.k then @curTree and @curTree.moveToPrev()
-			when VK.j then @curTree and @curTree.moveToNext()
-			when VK.l then @curTree and @curTree.moveToChild()
-			when VK.o then @curTree and @curTree.insert()
-			when VK.z then @curTree and @curTree.toggle()
-			when VK.C then @curTree and @curTree.edit()
-			when VK.O then @curTree and @curTree.insertBefore()
-			when VK.S then @curTree and @curTree.edit()
-			when VK.return then @curTree and @curTree.edit()
-			when VK.space then @curTree and @curTree.toggle()
+			when VK.a then tree.append()
+			when VK.d then tree.delete()
+			when VK.h then tree.moveToParent()
+			when VK.k then tree.moveToPrev()
+			when VK.j then tree.moveToNext()
+			when VK.l then tree.moveToChild()
+			when VK.o then tree.insert()
+			when VK.z then tree.toggle()
+			when VK.C then tree.edit()
+			when VK.O then tree.insertBefore()
+			when VK.S then tree.edit()
+			when VK.return then tree.edit()
+			when VK.space then tree.toggle()
 
 	return @
 
