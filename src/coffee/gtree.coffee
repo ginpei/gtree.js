@@ -22,7 +22,7 @@ document.addEventListener 'DOMContentLoaded', (event)->
 							return @
 				return @
 
-			pathString: (node)-> return node.body
+			pathString: (node)-> node.body
 			firstChild: (node)-> node.children?[0]
 			prev: (node)-> node.parent?.children?[node.index-1]
 			next: (node)-> node.parent?.children?[node.index+1]
