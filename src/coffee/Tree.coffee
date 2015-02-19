@@ -101,10 +101,11 @@ Tree = React.createClass
 	insert: (before)->
 		body = @_promptNew()
 		if body
+			next = @_initializeData({body})
+
 			cur = @curNode
-			index = cur.index + (if before then 0 else 1)
-			parent = cur.parent
-			next = @_initializeData({body}, parent, index)
+			next.index = index = cur.index + (if before then 0 else 1)
+			next.parent = parent = cur.parent
 
 			bros = parent.children
 			bros2 = bros.splice(index)
