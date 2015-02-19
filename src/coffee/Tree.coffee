@@ -4,7 +4,8 @@ Tree = React.createClass
 		path: []
 
 	render: ->
-		pathString = (@state.path.map (node, index) -> node.body).reverse().join(' - ')
+		operator = @operator
+		pathString = (@state.path.map (node, index) -> operator.pathString(node)).reverse().join(' - ')
 
 		React.createElement('div', null,
 			React.createElement('div', { className:'gtree-path' }, pathString)
@@ -15,9 +16,11 @@ Tree = React.createClass
 	# handle data
 
 	setData: (data)->
+		operator = @operator
+
 		data = @curNode = @_initializeData(data)
-		data.current = true
-		data.path = true
+		operator.current(data, true)
+		operator.path(data, true)
 		@setState({data, path:[data]})
 
 	_initializeData: (node, parent, index)->
@@ -31,13 +34,15 @@ Tree = React.createClass
 		return node
 
 	edit: ->
-		body = window.prompt 'Input the body', @curNode.body
+		operator = @operator
+		body = window.prompt 'Input the body', operator.body(@curNode)
 		if body
-			@curNode.body = body
+			operator.body(@curNode, body)
 			@setState(data:@state.data)
 
 	toggle: ->
-		@curNode.collapsed = !@curNode.collapsed
+		operator = @operator
+		operator.collapsed(@curNode, !operator.collapsed(@curNode))
 		@setState(data:@state.data)
 
 	# --------------------------------
