@@ -98,11 +98,13 @@ Tree = React.createClass
 			node.children.push(next)
 			@_moveTo(next)
 
-	insert: (before)->
-		body = @_promptNew()
-		if body
-			next = @_initializeData({body})
+	insert: (next, before)->
+		unless next
+			body = @_promptNew()
+			if body
+				next = @_initializeData({body})
 
+		if next
 			node = @curNode
 			next.index = index = node.index + (if before then 0 else 1)
 			next.parent = parent = node.parent
@@ -117,10 +119,13 @@ Tree = React.createClass
 			@_moveTo(next)
 
 	insertBefore: ->
-		@insert(true)
+		@insert(null, true)
 
 	_promptNew: ->
 		window.prompt('Input the body for the new node')
+
+	paste: ->
+		@insert(@yunkedNode) if @yunkedNode
 
 	delete: ->
 		old = @curNode
@@ -135,6 +140,8 @@ Tree = React.createClass
 			children.splice(old.index, 1)
 			children.map (node, index) -> node.index = index
 			@setState(data:@state.data)
+
+			@yunkedNode = old
 
 window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree
