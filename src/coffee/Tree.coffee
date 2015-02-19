@@ -8,14 +8,8 @@ Tree = React.createClass
 
 		React.createElement('div', null,
 			React.createElement('div', { className:'gtree-path' }, pathString)
-			React.createElement('ul', @_getAttr(), @_renderChildren())
+			React.createElement('ul', { className:'gtree-children' }, React.createElement(gtree.Node, @state.data))
 		)
-
-	_getAttr: ->
-		className: 'gtree-children'
-
-	_renderChildren: ->
-		React.createElement(gtree.Node, @state.data) if @state.data
 
 	# --------------------------------
 	# handle data
