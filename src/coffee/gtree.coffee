@@ -13,10 +13,6 @@ VK =
 	o: 111
 	z: 122
 
-CLS =
-	collapsed: 'gtree-collapsed'
-	current: 'gtree-current'
-
 gtree =
 	start: ->
 		manager = TreeManager()
