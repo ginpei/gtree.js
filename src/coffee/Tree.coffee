@@ -16,6 +16,7 @@ Tree = React.createClass
 
 	setData: (data)->
 		data = @curNode = @_initializeData(data)
+		data.current = true
 		data.path = true
 		@setState({data})
 
