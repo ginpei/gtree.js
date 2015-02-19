@@ -8,10 +8,14 @@ Tree = React.createClass
 
 	render: ->
 		operator = @operator
-		pathString = (@state.path.map (node, index) -> operator.pathString(node)).reverse().join(@props.pathDelimiter)
+
+		path = React.createElement(gtree.Path,
+			delimiter: @props.pathDelimiter
+			dirs: (@state.path.map (node, index) -> operator.pathString(node)).reverse()
+		)
 
 		React.createElement('div', null,
-			React.createElement('div', { className:'gtree-path' }, pathString)
+			path
 			React.createElement('ul', { className:'gtree-children' }, React.createElement(gtree.Node, @state.data))
 		)
 
