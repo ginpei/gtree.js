@@ -127,6 +127,9 @@ Tree = React.createClass
 	paste: ->
 		@insert(@yunkedNode) if @yunkedNode
 
+	pasteBefore: ->
+		@insert(@yunkedNode, true) if @yunkedNode
+
 	delete: ->
 		old = @curNode
 		@moveToNext()

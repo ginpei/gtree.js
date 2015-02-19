@@ -9,6 +9,7 @@ TreeManager.prototype.VK =
 	space: 32
 	C: 67
 	O: 79
+	P: 80
 	S: 83
 	a: 97
 	d: 100
@@ -37,6 +38,7 @@ TreeManager.prototype.constructor = (options)->
 			when VK.z then tree.toggle()
 			when VK.C then tree.edit()
 			when VK.O then tree.insertBefore()
+			when VK.P then tree.pasteBefore()
 			when VK.S then tree.edit()
 			when VK.return then tree.edit()
 			when VK.space then tree.toggle()
