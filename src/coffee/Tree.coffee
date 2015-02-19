@@ -11,6 +11,9 @@ Tree = React.createClass
 	_renderChildren: ->
 		React.createElement(gtree.Node, @state.data) if @state.data
 
+	# --------------------------------
+	# handle data
+
 	setData: (data)->
 		data = @curNode = @_initializeData(data)
 		@setState({data})
@@ -24,6 +27,19 @@ Tree = React.createClass
 			@_initializeData(child, node, index)
 
 		return node
+
+	edit: ->
+		body = window.prompt 'Input the body', @curNode.body
+		if body
+			@curNode.body = body
+			@setState(data:@state.data)
+
+	toggle: ->
+		@curNode.collapsed = !@curNode.collapsed
+		@setState(data:@state.data)
+
+	# --------------------------------
+	# travarser
 
 	moveToParent: ->
 		@_moveTo(@curNode.parent)
@@ -44,15 +60,8 @@ Tree = React.createClass
 			@curNode = next
 			@setState(data:@state.data)
 
-	edit: ->
-		body = window.prompt 'Input the body', @curNode.body
-		if body
-			@curNode.body = body
-			@setState(data:@state.data)
-
-	toggle: ->
-		@curNode.collapsed = !@curNode.collapsed
-		@setState(data:@state.data)
+	# --------------------------------
+	# manipulations
 
 	append: ->
 		body = @_promptNew()
