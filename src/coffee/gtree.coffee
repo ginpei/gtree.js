@@ -1,18 +1,3 @@
-VK =
-	return: 13
-	space: 32
-	C: 67
-	O: 79
-	S: 83
-	a: 97
-	d: 100
-	h: 104
-	j: 106
-	k: 107
-	l: 108
-	o: 111
-	z: 122
-
 gtree =
 	start: ->
 		manager = TreeManager()
@@ -33,8 +18,24 @@ TreeManager = (options)->
 	else
 		return new TreeManager(options)
 
+TreeManager.prototype.VK =
+	return: 13
+	space: 32
+	C: 67
+	O: 79
+	S: 83
+	a: 97
+	d: 100
+	h: 104
+	j: 106
+	k: 107
+	l: 108
+	o: 111
+	z: 122
+
 TreeManager.prototype.constructor = (options)->
 	$(document).on 'keypress', (event)=>
+		VK = @VK
 		switch event.keyCode
 			when VK.a then @curTree and @curTree.append()
 			when VK.d then @curTree and @curTree.delete()
