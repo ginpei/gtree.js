@@ -16,11 +16,9 @@ Tree = React.createClass
 	# handle data
 
 	setData: (data)->
-		operator = @operator
-
 		data = @curNode = @_initializeData(data)
-		operator.current(data, true)
-		operator.path(data, true)
+		data.current = true
+		data.path = true
 		@setState({data, path:[data]})
 
 	_initializeData: (node, parent, index)->
@@ -41,8 +39,7 @@ Tree = React.createClass
 			@setState(data:@state.data)
 
 	toggle: ->
-		operator = @operator
-		operator.collapsed(@curNode, !operator.collapsed(@curNode))
+		@curNode.collapsed = !@curNode.collapsed
 		@setState(data:@state.data)
 
 	# --------------------------------

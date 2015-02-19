@@ -10,7 +10,7 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				{ body:'Child 3' }
 			]
 		operator:
-			_values: 'current path body collapsed'
+			_values: 'body'
 
 			initialize: ->
 				@_values.split(' ').forEach (name, index)=>
