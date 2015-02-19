@@ -16,6 +16,7 @@ Tree = React.createClass
 
 	setData: (data)->
 		data = @curNode = @_initializeData(data)
+		data.path = true
 		@setState({data})
 
 	_initializeData: (node, parent, index)->
@@ -55,9 +56,20 @@ Tree = React.createClass
 
 	_moveTo: (next)->
 		if next
+			@curPath?.forEach (node, index)-> node.path = false
+
 			@curNode.current = false
 			next.current = true
 			@curNode = next
+
+			curPath = []
+			pathNode = next
+			while pathNode
+				curPath.push(pathNode)
+				pathNode.path = true
+				pathNode = pathNode.parent
+			@curPath = curPath
+
 			@setState(data:@state.data)
 
 	# --------------------------------

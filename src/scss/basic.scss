@@ -7,6 +7,7 @@
 		padding: 4px;
 	}
 	&-body {
+		opacity: 0.3;
 		padding: 4px;
 	}
 	&-node.gtree-current {
@@ -15,6 +16,9 @@
 	&-node.gtree-current > &-body {
 		background-color: #fee;
 		text-decoration: underline;
+	}
+	&-node.gtree-path > &-body {
+		opacity: 1;
 	}
 	&-children {
 		padding: 4px;

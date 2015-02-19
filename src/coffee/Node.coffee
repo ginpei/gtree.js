@@ -9,6 +9,7 @@ Node = React.createClass
 		className = 'gtree-node'
 		className += ' gtree-current' if @props.current
 		className += ' gtree-collapsed' if @props.collapsed
+		className += ' gtree-path' if @props.path
 		React.createElement('li', { className }, @_renderBody(), @_renderChildren())
 
 	_renderBody: ->
