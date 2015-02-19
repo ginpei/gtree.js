@@ -10,33 +10,17 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				{ body:'Child 3' }
 			]
 		operator:
-			current: (node, value)->
-				if arguments.length < 2
-					return node.current
-				else
-					node.current = value
-					return @
+			values: 'current path body collapsed'
 
-			path: (node, value)->
-				if arguments.length < 2
-					return node.path
-				else
-					node.path = value
-					return @
-
-			body: (node, value)->
-				if arguments.length < 2
-					return node.body
-				else
-					node.body = value
-					return @
-
-			collapsed: (node, value)->
-				if arguments.length < 2
-					return node.collapsed
-				else
-					node.collapsed = value
-					return @
+			initialize: ->
+				@values.split(' ').forEach (name, index)=>
+					@[name] = (node, value)->
+						if arguments.length < 2
+							return node[name]
+						else
+							node[name] = value
+							return @
+				return @
 
 			pathString: (node)->
 				return node.body

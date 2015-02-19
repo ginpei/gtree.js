@@ -45,7 +45,7 @@ TreeManager.prototype.init = (options)->
 		el = document.querySelector(el)
 
 	tree = React.render(React.createElement(gtree.Tree), el)
-	tree.operator = options.operator
+	tree.operator = options.operator.initialize()
 	tree.setData(options.data)
 
 	@curTree = tree unless @curTree
