@@ -1,6 +1,10 @@
 .gtree {
 	padding: 0;
 
+	&-path-delimiter {
+		font-size: 0.5em;
+	}
+
 	&-node {
 		background-color: #fff;
 		border-left: solid 1px #090;
