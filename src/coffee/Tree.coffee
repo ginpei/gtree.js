@@ -49,39 +49,43 @@ Tree = React.createClass
 	# travarser
 
 	moveToParent: ->
-		@_moveTo(@curNode.parent)
+		@_moveTo(@operator.parent(@curNode))
 
 	moveToChild: ->
-		@_moveTo(@curNode.children?[0])
+		@_moveTo(@operator.firstChild(@curNode))
 
 	moveToPrev: ->
-		@_moveTo(@curNode.parent?.children?[@curNode.index-1])
+		@_moveTo(@operator.prev(@curNode))
 
 	moveToNext: ->
-		@_moveTo(@curNode.parent?.children?[@curNode.index+1])
+		@_moveTo(@operator.next(@curNode))
 
 	_moveTo: (next)->
+		operator = @operator
 		if next
 			@_resetPath()
 
-			@curNode.current = false
-			next.current = true
+			operator.current(@curNode, false)
+			operator.current(next, true)
 			@curNode = next
 
 			@_preparePath(next)
 			@setState(data:@state.data, path:@state.path)
 
 	_resetPath: ->
-		@state.path.forEach (node, index)-> node.path = false
+		operator = @operator
+		@state.path.forEach (node, index)-> operator.path(node, false)
 
 	_preparePath: (next)->
+		operator = @operator
+
 		curPath = @state.path
 		curPath.splice(0)
 		pathNode = next
 		while pathNode
 			curPath.push(pathNode)
-			pathNode.path = true
-			pathNode = pathNode.parent
+			operator.path(pathNode, true)
+			pathNode = operator.parent(pathNode)
 
 	# --------------------------------
 	# manipulations
