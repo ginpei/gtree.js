@@ -93,9 +93,9 @@ Tree = React.createClass
 	append: ->
 		body = @_promptNew()
 		if body
-			cur = @curNode
-			next = @_initializeData({body}, cur, cur.children.length)
-			cur.children.push(next)
+			node = @curNode
+			next = @_initializeData({body}, node, node.children.length)
+			node.children.push(next)
 			@_moveTo(next)
 
 	insert: (before)->
@@ -103,9 +103,9 @@ Tree = React.createClass
 		if body
 			next = @_initializeData({body})
 
-			cur = @curNode
-			next.index = index = cur.index + (if before then 0 else 1)
-			next.parent = parent = cur.parent
+			node = @curNode
+			next.index = index = node.index + (if before then 0 else 1)
+			next.parent = parent = node.parent
 
 			bros = parent.children
 			bros2 = bros.splice(index)
