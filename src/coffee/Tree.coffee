@@ -127,6 +127,22 @@ Tree = React.createClass
 	yunk: ->
 		@yunkedNode = @curNode
 
+	delete: ->
+		old = @curNode
+		@moveToNext()
+		if @curNode is old
+			@moveToPrev()
+			if @curNode is old
+				@moveToParent()
+
+		if @curNode isnt old
+			children = old.parent.children
+			children.splice(old.index, 1)
+			children.map (node, index) -> node.index = index
+			@setState(data:@state.data)
+
+			@yunkedNode = old
+
 	paste: ->
 		@insert(@_cloneNode(@yunkedNode)) if @yunkedNode
 
@@ -149,22 +165,6 @@ Tree = React.createClass
 		cloned.children.forEach (node, index)-> node.parent = cloned
 
 		cloned
-
-	delete: ->
-		old = @curNode
-		@moveToNext()
-		if @curNode is old
-			@moveToPrev()
-			if @curNode is old
-				@moveToParent()
-
-		if @curNode isnt old
-			children = old.parent.children
-			children.splice(old.index, 1)
-			children.map (node, index) -> node.index = index
-			@setState(data:@state.data)
-
-			@yunkedNode = old
 
 window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree
