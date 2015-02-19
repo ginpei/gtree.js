@@ -46,7 +46,10 @@ TreeManager.prototype.init = (options)->
 	if typeof el is 'string'
 		el = document.querySelector(el)
 
-	tree = React.render(React.createElement(gtree.Tree), el)
+	props =
+		pathDelimiter: options.pathDelimiter
+
+	tree = React.render(React.createElement(gtree.Tree, props), el)
 	tree.operator = options.operator.initialize()
 	tree.setData(options.data)
 

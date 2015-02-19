@@ -2,6 +2,7 @@ document.addEventListener 'DOMContentLoaded', (event)->
 	manager = gtree.TreeManager()
 	manager.init
 		el: '#gtree'
+		pathDelimiter: ' > '
 		data:
 			body:'Root'
 			children: [

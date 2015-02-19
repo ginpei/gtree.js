@@ -1,11 +1,14 @@
 Tree = React.createClass
+	getDefaultProps: ->
+		pathDelimiter: ' - '
+
 	getInitialState:->
 		data: null
 		path: []
 
 	render: ->
 		operator = @operator
-		pathString = (@state.path.map (node, index) -> operator.pathString(node)).reverse().join(' - ')
+		pathString = (@state.path.map (node, index) -> operator.pathString(node)).reverse().join(@props.pathDelimiter)
 
 		React.createElement('div', null,
 			React.createElement('div', { className:'gtree-path' }, pathString)
