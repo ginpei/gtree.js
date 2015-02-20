@@ -10,6 +10,8 @@ document.addEventListener 'DOMContentLoaded', (event)->
 				{ body:'Child 2', children:[{ body:'2-1' }, { body:'2-2' }] }
 				{ body:'Child 3' }
 			]
+		renderBody: (props)->
+			React.createElement('div', { className:'gtree-body' }, props.body)
 		operator:
 			_values: 'body'
 

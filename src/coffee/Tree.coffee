@@ -26,6 +26,7 @@ Tree = React.createClass
 		data = @curNode = @_initializeData(data)
 		data.current = true
 		data.path = true
+		data.renderBody = @props.renderBody
 		@setState({data, path:[data]})
 
 	_initializeData: (node, parent, index)->
