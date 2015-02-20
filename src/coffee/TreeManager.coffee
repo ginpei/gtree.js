@@ -28,6 +28,12 @@ TreeManager.prototype.constructor = (options)->
 		return unless tree
 		VK = @VK
 		switch event.keyCode
+			when VK.return then tree.edit()
+			when VK.space then tree.toggle()
+			when VK.C then tree.edit()
+			when VK.O then tree.insertBefore()
+			when VK.P then tree.pasteBefore()
+			when VK.S then tree.edit()
 			when VK.a then tree.append()
 			when VK.d then tree.delete()
 			when VK.h then tree.moveToParent()
@@ -38,12 +44,6 @@ TreeManager.prototype.constructor = (options)->
 			when VK.p then tree.paste()
 			when VK.y then tree.yunk()
 			when VK.z then tree.toggle()
-			when VK.C then tree.edit()
-			when VK.O then tree.insertBefore()
-			when VK.P then tree.pasteBefore()
-			when VK.S then tree.edit()
-			when VK.return then tree.edit()
-			when VK.space then tree.toggle()
 
 	return @
 
