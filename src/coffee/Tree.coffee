@@ -90,11 +90,16 @@ Tree = React.createClass
 	# --------------------------------
 	# manipulations
 
-	append: ->
-		body = @_promptNew()
-		if body
+	append: (next)->
+		unless next
+			body = @_promptNew()
+			if body
+				next = @_initializeData({body})
+
+		if next
 			node = @curNode
-			next = @_initializeData({body}, node, node.children.length)
+			next.parent = node
+			next.index = node.children.length
 			node.children.push(next)
 			@_moveTo(next)
 
@@ -148,6 +153,9 @@ Tree = React.createClass
 
 	pasteBefore: ->
 		@insert(@_cloneNode(@yunkedNode), true) if @yunkedNode
+
+	pasteChild: ->
+		@append(@_cloneNode(@yunkedNode)) if @yunkedNode
 
 	_cloneNode: (obj, parent)->
 		cloned = {}

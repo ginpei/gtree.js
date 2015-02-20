@@ -7,6 +7,7 @@ TreeManager = (options)->
 TreeManager.prototype.VK =
 	return: 13
 	space: 32
+	A: 65
 	C: 67
 	O: 79
 	P: 80
@@ -30,6 +31,7 @@ TreeManager.prototype.constructor = (options)->
 		switch event.keyCode
 			when VK.return then tree.edit()
 			when VK.space then tree.toggle()
+			when VK.A then tree.pasteChild()
 			when VK.C then tree.edit()
 			when VK.O then tree.insertBefore()
 			when VK.P then tree.pasteBefore()
