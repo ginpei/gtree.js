@@ -85,7 +85,7 @@ Tree = React.createClass
 
 	edit: ->
 		operator = @operator
-		body = window.prompt 'Input the body', operator.body(@curNode)
+		body = @_editBody operator.body(@curNode), message:'Input the body'
 		if body
 			operator.body(@curNode, body)
 			@setState(data:@state.data)
@@ -137,7 +137,7 @@ Tree = React.createClass
 
 	append: (next)->
 		unless next
-			body = @_promptNew()
+			body = @_editBody(null, message:'Input the body for the new node')
 			if body
 				next = @_initializeData({body})
 
@@ -150,7 +150,7 @@ Tree = React.createClass
 
 	insert: (next, before)->
 		unless next
-			body = @_promptNew()
+			body = @_editBody(null, message:'Input the body for the new node')
 			if body
 				next = @_initializeData({body})
 
@@ -170,9 +170,6 @@ Tree = React.createClass
 
 	insertBefore: ->
 		@insert(null, true)
-
-	_promptNew: ->
-		window.prompt('Input the body for the new node')
 
 	yunk: ->
 		@yunkedNode = @curNode
@@ -218,6 +215,9 @@ Tree = React.createClass
 		cloned.children.forEach (node, index)-> node.parent = cloned
 
 		cloned
+
+	_editBody: (body, options)->
+		window.prompt options.message, body
 
 window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree
