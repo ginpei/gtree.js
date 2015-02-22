@@ -148,18 +148,15 @@ Tree = React.createClass
 					node.children.push(next)
 					@_moveTo(next)
 
-	insert: (next, before)->
-		if next
-			@_insertNode(next, before)
-		else
-			@_editBody null, message:'Input the body for the new node', (body)=>
-				if body
-					next = @_initializeData({body})
+	insert: (before)->
+		@_editBody null, message:'Input the body for the new node', (body)=>
+			if body
+				next = @_initializeData({body})
 
-				@_insertNode(next, before)
+			@_insertNode(next, before)
 
 	insertBefore: ->
-		@insert(null, true)
+		@insert(true)
 
 	_insertNode: (next, before)->
 		return unless next
@@ -197,10 +194,10 @@ Tree = React.createClass
 			@yunkedNode = old
 
 	paste: ->
-		@insert(@_cloneNode(@yunkedNode)) if @yunkedNode
+		@_insertNode(@_cloneNode(@yunkedNode)) if @yunkedNode
 
 	pasteBefore: ->
-		@insert(@_cloneNode(@yunkedNode), true) if @yunkedNode
+		@_insertNode(@_cloneNode(@yunkedNode), true) if @yunkedNode
 
 	pasteChild: ->
 		@append(@_cloneNode(@yunkedNode)) if @yunkedNode
