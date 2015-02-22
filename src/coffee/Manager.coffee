@@ -22,6 +22,7 @@ Manager.prototype.init = (options)->
 	props =
 		pathDelimiter: options.pathDelimiter
 		renderBody: options.renderBody
+		editBody: options.editBody
 
 	tree = React.render(React.createElement(gtree.Tree, props), el)
 	tree.operator = options.operator.initialize()

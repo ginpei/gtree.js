@@ -20,6 +20,10 @@ Tree = React.createClass
 
 	getDefaultProps: ->
 		pathDelimiter: ' - '
+		editBody: (body, options, callback)->
+			setTimeout ->
+				callback(window.prompt(options.message, body))
+			, 1
 
 	getInitialState:->
 		data: null
@@ -220,9 +224,7 @@ Tree = React.createClass
 		cloned
 
 	_editBody: (body, options, callback)->
-		setTimeout ->
-			callback(window.prompt(options.message, body))
-		, 1
+		@props.editBody(body, options, callback)
 
 window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree
