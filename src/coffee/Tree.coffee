@@ -149,27 +149,33 @@ Tree = React.createClass
 					@_moveTo(next)
 
 	insert: (next, before)->
-		unless next
+		if next
+			@_insertNode(next, before)
+		else
 			@_editBody null, message:'Input the body for the new node', (body)=>
 				if body
 					next = @_initializeData({body})
 
-				if next
-					node = @curNode
-					next.index = index = node.index + (if before then 0 else 1)
-					next.parent = parent = node.parent
-
-					bros = parent.children
-					bros2 = bros.splice(index)
-					bros.push(next)
-					bros2.forEach (node, index)->
-						node.index++
-						bros.push(node)
-
-					@_moveTo(next)
+				@_insertNode(next, before)
 
 	insertBefore: ->
 		@insert(null, true)
+
+	_insertNode: (next, before)->
+		return unless next
+
+		node = @curNode
+		next.index = index = node.index + (if before then 0 else 1)
+		next.parent = parent = node.parent
+
+		bros = parent.children
+		bros2 = bros.splice(index)
+		bros.push(next)
+		bros2.forEach (node, index)->
+			node.index++
+			bros.push(node)
+
+		@_moveTo(next)
 
 	yunk: ->
 		@yunkedNode = @curNode
