@@ -22,7 +22,7 @@ Tree = React.createClass
 		pathDelimiter: ' - '
 		editBody: (body, options, callback)->
 			setTimeout ->
-				callback(window.prompt(options.message, body))
+				callback(window.prompt(options.message, body or ''))
 			, 1
 
 	getInitialState:->
