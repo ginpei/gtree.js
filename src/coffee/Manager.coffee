@@ -1,10 +1,10 @@
-TreeManager = (options)->
-	if @ instanceof TreeManager
+Manager = (options)->
+	if @ instanceof Manager
 		return @constructor(options)
 	else
-		return new TreeManager(options)
+		return new Manager(options)
 
-TreeManager.prototype.constructor = (options)->
+Manager.prototype.constructor = (options)->
 	document.addEventListener 'keypress', (event)=>
 		tree = @curTree
 		if tree
@@ -14,7 +14,7 @@ TreeManager.prototype.constructor = (options)->
 
 	return @
 
-TreeManager.prototype.init = (options)->
+Manager.prototype.init = (options)->
 	el = options.el
 	if typeof el is 'string'
 		el = document.querySelector(el)
@@ -32,4 +32,4 @@ TreeManager.prototype.init = (options)->
 	return tree
 
 window.gtree = {} unless window.gtree
-window.gtree.TreeManager = TreeManager
+window.gtree.Manager = Manager

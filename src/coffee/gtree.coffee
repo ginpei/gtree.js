@@ -1,5 +1,5 @@
 document.addEventListener 'DOMContentLoaded', (event)->
-	manager = gtree.TreeManager()
+	manager = gtree.Manager()
 	manager.init
 		el: '#gtree'
 		pathDelimiter: ' > '
