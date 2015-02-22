@@ -85,10 +85,10 @@ Tree = React.createClass
 
 	edit: ->
 		operator = @operator
-		body = @_editBody operator.body(@curNode), message:'Input the body'
-		if body
-			operator.body(@curNode, body)
-			@setState(data:@state.data)
+		@_editBody operator.body(@curNode), message:'Input the body', (body)=>
+			if body
+				operator.body(@curNode, body)
+				@setState(data:@state.data)
 
 	toggle: ->
 		@curNode.collapsed = !@curNode.collapsed
@@ -137,36 +137,36 @@ Tree = React.createClass
 
 	append: (next)->
 		unless next
-			body = @_editBody(null, message:'Input the body for the new node')
-			if body
-				next = @_initializeData({body})
+			@_editBody null, message:'Input the body for the new node', (body)=>
+				if body
+					next = @_initializeData({body})
 
-		if next
-			node = @curNode
-			next.parent = node
-			next.index = node.children.length
-			node.children.push(next)
-			@_moveTo(next)
+				if next
+					node = @curNode
+					next.parent = node
+					next.index = node.children.length
+					node.children.push(next)
+					@_moveTo(next)
 
 	insert: (next, before)->
 		unless next
-			body = @_editBody(null, message:'Input the body for the new node')
-			if body
-				next = @_initializeData({body})
+			@_editBody null, message:'Input the body for the new node', (body)=>
+				if body
+					next = @_initializeData({body})
 
-		if next
-			node = @curNode
-			next.index = index = node.index + (if before then 0 else 1)
-			next.parent = parent = node.parent
+				if next
+					node = @curNode
+					next.index = index = node.index + (if before then 0 else 1)
+					next.parent = parent = node.parent
 
-			bros = parent.children
-			bros2 = bros.splice(index)
-			bros.push(next)
-			bros2.forEach (node, index)->
-				node.index++
-				bros.push(node)
+					bros = parent.children
+					bros2 = bros.splice(index)
+					bros.push(next)
+					bros2.forEach (node, index)->
+						node.index++
+						bros.push(node)
 
-			@_moveTo(next)
+					@_moveTo(next)
 
 	insertBefore: ->
 		@insert(null, true)
@@ -216,8 +216,10 @@ Tree = React.createClass
 
 		cloned
 
-	_editBody: (body, options)->
-		window.prompt options.message, body
+	_editBody: (body, options, callback)->
+		setTimeout ->
+			callback(window.prompt(options.message, body))
+		, 1
 
 window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree
