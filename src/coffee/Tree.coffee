@@ -98,6 +98,9 @@ Tree = React.createClass
 		@curNode.collapsed = !@curNode.collapsed
 		@setState(data:@state.data)
 
+	_editBody: (body, options, callback)->
+		@props.editBody(body, options, callback)
+
 	# --------------------------------
 	# travarser
 
@@ -222,9 +225,6 @@ Tree = React.createClass
 		cloned.children.forEach (node, index)-> node.parent = cloned
 
 		cloned
-
-	_editBody: (body, options, callback)->
-		@props.editBody(body, options, callback)
 
 window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree
