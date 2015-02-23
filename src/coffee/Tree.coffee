@@ -43,6 +43,8 @@ Tree = React.createClass
 		)
 
 	onkey: (keyCode)->
+		return true if @_editing
+
 		VK = @VK
 		executed = true
 		switch keyCode
@@ -99,7 +101,10 @@ Tree = React.createClass
 		@setState(data:@state.data)
 
 	_editBody: (body, options, callback)->
-		@props.editBody(body, options, callback)
+		@_editing = true
+		@props.editBody body, options, (body)=>
+			callback(body)
+			@_editing = false
 
 	# --------------------------------
 	# travarser
