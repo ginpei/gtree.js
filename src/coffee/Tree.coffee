@@ -43,7 +43,7 @@ Tree = React.createClass
 		)
 
 	onkey: (keyCode)->
-		return true if @_editing
+		return false if @_editing
 
 		VK = @VK
 		executed = true
