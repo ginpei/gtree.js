@@ -1,4 +1,12 @@
 document.addEventListener 'DOMContentLoaded', (event)->
+	editorCallback = null;
+	$editor = document.querySelector('#editor')
+	$body = $editor.querySelector('[name=body]')
+
+	$editor.addEventListener 'submit', (event)->
+		event.preventDefault()
+		editorCallback($body.value) if editorCallback
+
 	manager = gtree.Manager()
 	manager.init
 		el: '#gtree'
@@ -12,6 +20,15 @@ document.addEventListener 'DOMContentLoaded', (event)->
 			]
 		renderBody: (props)->
 			React.createElement('div', { className:'gtree-body' }, props.body)
+		editBody: (body, options, callback)->
+			editorCallback = (body)->
+				$editor.classList.add('is-hidden')
+				editorCallback = null
+				callback(body)
+			$body.value = body
+			$editor.classList.remove('is-hidden')
+			$body.select()
+
 		operator:
 			_values: 'body'
 

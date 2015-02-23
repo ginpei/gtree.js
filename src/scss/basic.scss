@@ -34,3 +34,25 @@
 		padding: 4px;
 	}
 }
+
+.is-hidden {
+	display: none;
+}
+#editor {
+	background-color: rgba(0,0,0,0.5);
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+#editor [name=body] {
+	bottom: 0;
+	height: 3em;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50%;
+}
