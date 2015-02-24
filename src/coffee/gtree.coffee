@@ -1,7 +1,7 @@
 document.addEventListener 'DOMContentLoaded', (event)->
 	editorCallback = null;
 	$editor = document.querySelector('#editor')
-	$body = $editor.querySelector('[name=body]')
+	$body = $editor.querySelector('.js-body')
 
 	$editor.addEventListener 'submit', (event)->
 		event.preventDefault()
