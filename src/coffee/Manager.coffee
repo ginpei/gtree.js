@@ -5,13 +5,16 @@ Manager = (options)->
 		return new Manager(options)
 
 Manager.prototype.constructor = (options)->
-	document.addEventListener 'keypress', (event)=>
+	onkey = (event)=>
 		tree = @curTree
 		if tree
 			command = window.keymapstring(event)
 			executed = tree.onkey(command)
 			if executed
 				event.preventDefault()
+
+	document.addEventListener('keydown', onkey)
+	document.addEventListener('keypress', onkey)
 
 	return @
 
