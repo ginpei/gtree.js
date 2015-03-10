@@ -16,6 +16,7 @@ path =
 		js: 'src/coffee/**/*.coffee'
 		jslib: [
 			'bower_components/react/react.js'
+			'libs/keymapstring.js/keymapstring.js'
 		]
 	dest:
 		css: 'public/css'

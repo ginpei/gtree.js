@@ -8,7 +8,8 @@ Manager.prototype.constructor = (options)->
 	document.addEventListener 'keypress', (event)=>
 		tree = @curTree
 		if tree
-			executed = tree.onkey(event.keyCode)
+			command = window.keymapstring(event)
+			executed = tree.onkey(command)
 			if executed
 				event.preventDefault()
 

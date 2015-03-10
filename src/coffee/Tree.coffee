@@ -1,22 +1,22 @@
 Tree = React.createClass
-	VK:
-		return: 13
-		space: 32
-		A: 65
-		C: 67
-		O: 79
-		P: 80
-		S: 83
-		a: 97
-		d: 100
-		h: 104
-		j: 106
-		k: 107
-		l: 108
-		o: 111
-		p: 112
-		y: 121
-		z: 122
+	commands:
+		'return': 'edit'
+		'space': 'toggle'
+		'S-a': 'pasteChild'
+		'S-c': 'edit'
+		'S-o': 'insertBefore'
+		'S-p': 'pasteBefore'
+		'S-s': 'edit'
+		'a': 'append'
+		'd': 'delete'
+		'h': 'moveToParent'
+		'k': 'moveToPrev'
+		'j': 'moveToNext'
+		'l': 'moveToChild'
+		'o': 'insert'
+		'p': 'paste'
+		'y': 'yunk'
+		'z': 'toggle'
 
 	getDefaultProps: ->
 		pathDelimiter: ' - '
@@ -42,32 +42,15 @@ Tree = React.createClass
 			React.createElement('ul', { className:'gtree-children' }, React.createElement(gtree.Node, @state.data))
 		)
 
-	onkey: (keyCode)->
+	onkey: (command)->
 		return false if @_editing
 
-		VK = @VK
-		executed = true
-		switch keyCode
-			when VK.return then @edit()
-			when VK.space then @toggle()
-			when VK.A then @pasteChild()
-			when VK.C then @edit()
-			when VK.O then @insertBefore()
-			when VK.P then @pasteBefore()
-			when VK.S then @edit()
-			when VK.a then @append()
-			when VK.d then @delete()
-			when VK.h then @moveToParent()
-			when VK.k then @moveToPrev()
-			when VK.j then @moveToNext()
-			when VK.l then @moveToChild()
-			when VK.o then @insert()
-			when VK.p then @paste()
-			when VK.y then @yunk()
-			when VK.z then @toggle()
-			else executed = false
-
-		return executed
+		action = @commands[command]
+		if action
+			@[action]()
+			return true
+		else
+			return false
 
 	# --------------------------------
 	# handle data
