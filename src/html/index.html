@@ -8,7 +8,16 @@
 	</head>
 	<body>
 		<form id="editor" class="is-hidden">
-			<input class="js-body" type="text" name="body" />
+			<div class="editor-front">
+				<h1>Edit</h1>
+				<div class="editor-forms">
+					<label>Body: <input class="js-body" type="text" name="body" /></label>
+				</div>
+				<div class="editor-buttons">
+					<button class="editor-cancel">Cancel</button>
+					<button class="editor-submit">Update</button>
+				</div>
+			</div>
 		</form>
 		<div id="gtree" class="gtree"></div>
 		<script src="/js/libs.js"></script>
