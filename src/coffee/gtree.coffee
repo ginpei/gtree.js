@@ -3,6 +3,9 @@ document.addEventListener 'DOMContentLoaded', (event)->
 	$editor = document.querySelector('#editor')
 	$body = $editor.querySelector('.js-body')
 
+	document.querySelector('.js-editor-cancel').addEventListener 'click', (event)->
+		editorCallback(null)
+
 	document.addEventListener 'keydown', (event)->
 		if editorCallback and event.keyCode is 27  # Esc
 			editorCallback(null)
