@@ -45,41 +45,42 @@
 	position: fixed;
 	top: 0;
 	width: 100%;
-}
-#editor .editor-front {
-	background-color: #fff;
-	border: solid 1px #ccc;
-	border-radius: 0.5em;
-	bottom: 0;
-	height: 150px;
-	left: 0;
-	margin: auto;
-	padding: 1em;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 400px;
-}
-#editor h1 {
-	margin-top: 0;
-}
-#editor .editor-forms {
-	text-align: center;
-	margin-bottom: 1em;
-}
-#editor [name=body] {
-	height: 3em;
-	width: 350px;
-}
-#editor .editor-buttons {
-	text-align: center;
-}
-#editor .editor-buttons button {
-	height: 3em;
-}
-#editor .editor-cancel {
-	width: 20%;
-}
-#editor .editor-submit {
-	width: 70%;
+
+	.editor-front {
+		background-color: #fff;
+		border: solid 1px #ccc;
+		border-radius: 0.5em;
+		bottom: 0;
+		height: 150px;
+		left: 0;
+		margin: auto;
+		padding: 1em;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 400px;
+	}
+	h1 {
+		margin-top: 0;
+	}
+	.editor-forms {
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	[name=body] {
+		height: 3em;
+		width: 350px;
+	}
+	.editor-buttons {
+		text-align: center;
+	}
+	.editor-buttons button {
+		height: 3em;
+	}
+	.editor-cancel {
+		width: 20%;
+	}
+	.editor-submit {
+		width: 70%;
+	}
 }
