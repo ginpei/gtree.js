@@ -13,7 +13,12 @@ path =
 	src:
 		css: 'src/scss/**/*.scss'
 		html: 'src/html/**/*.html'
-		js: 'src/coffee/**/*.coffee'
+		js: [
+			'src/coffee/Manager.coffee'
+			'src/coffee/Tree.coffee'
+			'src/coffee/Path.coffee'
+			'src/coffee/Node.coffee'
+		]
 		jslib: [
 			'bower_components/react/react.js'
 			'libs/keymapstring.js/keymapstring.js'
@@ -43,6 +48,7 @@ g.task 'js', ->
 		.pipe sourcemaps.init()
 		.pipe coffee
 			sourceMap: true
+		.pipe concat('gtree.js')
 		.pipe sourcemaps.write()
 		.pipe g.dest(path.dest.js)
 		.pipe livereload()
