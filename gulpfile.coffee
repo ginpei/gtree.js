@@ -28,8 +28,6 @@ path =
 		css: 'public/css'
 		html: 'public'
 		js: 'public/js'
-		vender:
-			js: 'public/js'
 
 g.task 'clean', ->
 	del 'public'
@@ -66,7 +64,7 @@ g.task 'js', ->
 g.task 'vender', ->
 	g.src path.src.vender.js
 		.pipe concat('libs.js')
-		.pipe g.dest(path.dest.vender.js)
+		.pipe g.dest(path.dest.js)
 
 g.task 'watch', ->
 	livereload.listen()
