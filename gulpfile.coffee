@@ -5,7 +5,6 @@ g = require 'gulp'
 livereload = require 'gulp-livereload'
 sass = require 'gulp-sass'
 sourcemaps = require 'gulp-sourcemaps'
-watch = require 'gulp-watch'
 webserver = require 'gulp-webserver'
 
 path =
@@ -69,11 +68,11 @@ g.task 'vender', ->
 
 g.task 'watch', ->
 	livereload.listen()
-	watch path.src.css, -> g.start 'css'
-	watch path.src.html, -> g.start 'html'
-	watch path.src.jsexample, -> g.start 'jsexample'
-	watch path.src.js, -> g.start 'js'
-	watch 'gulpfile.coffee', -> g.start 'build'
+	g.watch path.src.css, ['css']
+	g.watch path.src.html, ['html']
+	g.watch path.src.jsexample, ['jsexample']
+	g.watch path.src.js, ['js']
+	g.watch 'gulpfile.coffee', ['build']
 
 g.task 'webserver', ->
 	g.src 'public'
