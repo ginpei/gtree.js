@@ -34,7 +34,13 @@ Tree = React.createClass
 
 		path = React.createElement(gtree.Path,
 			delimiter: @props.pathDelimiter
-			dirs: (@state.path.map (node, index) -> operator.pathString(node)).reverse()
+			dirs:
+				(@state.path.map (node, index) ->
+					if operator?.pathString
+						operator.pathString(node)
+					else
+						node.body.toString()
+				).reverse()
 		)
 
 		React.createElement('div', null,

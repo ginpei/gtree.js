@@ -29,7 +29,7 @@ Manager.prototype.init = (options)->
 		editBody: options.editBody
 
 	tree = React.render(React.createElement(gtree.Tree, props), el)
-	tree.operator = options.operator.initialize()
+	tree.operator = options.operator?.initialize?() or options.operator
 	tree.setData(options.data)
 
 	@curTree = tree unless @curTree

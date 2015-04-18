@@ -4,5 +4,3 @@ document.addEventListener 'DOMContentLoaded', (event)->
 		el: '#tree'
 		data:
 			body:'Root'
-		operator:
-			pathString: (node)-> node.body
