@@ -13,6 +13,7 @@ path =
 		html: 'src/html/**/*.html'
 		jsExample: 'src/coffee/*.coffee'
 		jsMain: [
+			'src/coffee/gtree/interface.coffee'
 			'src/coffee/gtree/Manager.coffee'
 			'src/coffee/gtree/Tree.coffee'
 			'src/coffee/gtree/Path.coffee'

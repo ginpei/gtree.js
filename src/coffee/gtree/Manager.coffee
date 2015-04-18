@@ -36,5 +36,4 @@ Manager.prototype.init = (options)->
 
 	return tree
 
-window.gtree = {} unless window.gtree
 window.gtree.Manager = Manager

@@ -220,5 +220,4 @@ Tree = React.createClass
 
 		cloned
 
-window.gtree = {} unless window.gtree
 window.gtree.Tree = Tree

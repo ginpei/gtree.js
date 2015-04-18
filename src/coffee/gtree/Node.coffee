@@ -26,5 +26,4 @@ Node = React.createClass
 			node.renderBody = renderBody
 			React.createElement(gtree.Node, node)
 
-window.gtree = {} unless window.gtree
 window.gtree.Node = Node

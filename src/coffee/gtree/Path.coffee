@@ -9,5 +9,4 @@ Path = React.createClass
 
 		React.createElement('div', { className:'gtree-path' }, path)
 
-window.gtree = {} unless window.gtree
 window.gtree.Path = Path
