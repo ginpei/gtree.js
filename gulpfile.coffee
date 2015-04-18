@@ -43,7 +43,7 @@ g.task 'html', ->
 		.pipe g.dest(path.dest.html)
 		.pipe livereload()
 
-g.task 'js', ->
+g.task 'jsexample', ->
 	g.src path.src.jsexample
 		.pipe sourcemaps.init()
 		.pipe coffee
@@ -52,6 +52,7 @@ g.task 'js', ->
 		.pipe g.dest(path.dest.js)
 		.pipe livereload()
 
+g.task 'js', ->
 	g.src path.src.js
 		.pipe sourcemaps.init()
 		.pipe coffee
@@ -70,6 +71,7 @@ g.task 'watch', ->
 	livereload.listen()
 	watch path.src.css, -> g.start 'css'
 	watch path.src.html, -> g.start 'html'
+	watch path.src.jsexample, -> g.start 'jsexample'
 	watch path.src.js, -> g.start 'js'
 	watch 'gulpfile.coffee', -> g.start 'build'
 
