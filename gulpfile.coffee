@@ -66,7 +66,7 @@ g.task 'vender', ->
 		.pipe concat('libs.js')
 		.pipe g.dest(path.dest.js)
 
-g.task 'watch', ->
+g.task 'watch', ['webserver'], ->
 	livereload.listen()
 	g.watch path.src.css, ['css']
 	g.watch path.src.html, ['html']
@@ -74,7 +74,7 @@ g.task 'watch', ->
 	g.watch path.src.js, ['js']
 	g.watch 'gulpfile.coffee', ['build']
 
-g.task 'webserver', ->
+g.task 'webserver', ['build'], ->
 	g.src 'public'
 		.pipe webserver
 			host: '0.0.0.0'
@@ -87,8 +87,4 @@ g.task 'build', [
 	'vender'
 ]
 
-g.task 'default', [
-	'build'
-	'webserver'
-	'watch'
-]
+g.task 'default', [ 'watch' ]
