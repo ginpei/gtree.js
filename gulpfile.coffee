@@ -72,7 +72,6 @@ g.task 'watch', ['webserver'], ->
 	g.watch path.src.html, ['html']
 	g.watch path.src.jsExample, ['jsExample']
 	g.watch path.src.jsMain, ['jsMain']
-	g.watch 'gulpfile.coffee', ['build']
 
 g.task 'webserver', ['build'], ->
 	g.src 'public'
