@@ -11,8 +11,8 @@ path =
 	src:
 		css: 'src/scss/**/*.scss'
 		html: 'src/html/**/*.html'
-		jsexample: 'src/coffee/*.coffee'
-		js: [
+		jsExample: 'src/coffee/*.coffee'
+		jsMain: [
 			'src/coffee/gtree/Manager.coffee'
 			'src/coffee/gtree/Tree.coffee'
 			'src/coffee/gtree/Path.coffee'
@@ -42,8 +42,8 @@ g.task 'html', ->
 		.pipe g.dest(path.dest.html)
 		.pipe livereload()
 
-g.task 'jsexample', ->
-	g.src path.src.jsexample
+g.task 'jsExample', ->
+	g.src path.src.jsExample
 		.pipe sourcemaps.init()
 		.pipe coffee
 			sourceMap: true
@@ -51,8 +51,8 @@ g.task 'jsexample', ->
 		.pipe g.dest(path.dest.js)
 		.pipe livereload()
 
-g.task 'js', ->
-	g.src path.src.js
+g.task 'jsMain', ->
+	g.src path.src.jsMain
 		.pipe sourcemaps.init()
 		.pipe coffee
 			sourceMap: true
@@ -70,8 +70,8 @@ g.task 'watch', ['webserver'], ->
 	livereload.listen()
 	g.watch path.src.css, ['css']
 	g.watch path.src.html, ['html']
-	g.watch path.src.jsexample, ['jsexample']
-	g.watch path.src.js, ['js']
+	g.watch path.src.jsExample, ['jsExample']
+	g.watch path.src.jsMain, ['jsMain']
 	g.watch 'gulpfile.coffee', ['build']
 
 g.task 'webserver', ['build'], ->
@@ -83,8 +83,8 @@ g.task 'webserver', ['build'], ->
 g.task 'build', [
 	'css'
 	'html'
-	'jsexample'
-	'js'
+	'jsExample'
+	'jsMain'
 	'vender'
 ]
 
