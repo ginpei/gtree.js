@@ -8,9 +8,11 @@
 	&-node {
 		background-color: #fff;
 		border-left: solid 1px #ccc;
+		display: table;
 		padding: 4px;
 	}
 	&-body {
+		display: table-cell;
 		opacity: 0.3;
 		padding: 4px;
 	}
@@ -31,6 +33,7 @@
 		opacity: 1;
 	}
 	&-children {
+		display: table-cell;
 		padding: 4px;
 	}
 }

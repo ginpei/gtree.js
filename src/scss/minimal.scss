@@ -1,87 +1,10 @@
 .gtree {
-	padding: 0;
-
-	&-path-delimiter {
-		font-size: 0.5em;
-	}
-
-	&-node {
-		background-color: #fff;
-		border-left: solid 1px #ccc;
-		padding: 4px;
-	}
-	&-body {
-		opacity: 0.3;
-		padding: 4px;
-	}
 	&-node.gtree-on-path,
 	&-node.gtree-on-path > &-children > &-node {
-		border-color: #090;
+		font-weight: normal;
 	}
 	&-node.gtree-node.gtree-current,
 	&-node.gtree-on-path > &-children > &-node.gtree-node.gtree-current {
-		border-color: #f00;
-	}
-	&-node.gtree-current > &-body {
-		background-color: #fee;
-		text-decoration: underline;
-	}
-	&-node.gtree-on-path > &-body,
-	&-node.gtree-on-path > &-children > &-node.gtree-node > &-body {
-		opacity: 1;
-	}
-	&-children {
-		padding: 4px;
-	}
-}
-
-.is-hidden {
-	display: none;
-}
-#editor {
-	background-color: rgba(0,0,0,0.5);
-	height: 100%;
-	left: 0;
-	position: fixed;
-	top: 0;
-	width: 100%;
-
-	.editor-front {
-		background-color: #fff;
-		border: solid 1px #ccc;
-		border-radius: 0.5em;
-		bottom: 0;
-		box-shadow: 0 0 1px #fff, 0 0 10px rgba(0,0,0,0.5);
-		height: 150px;
-		left: 0;
-		margin: auto;
-		padding: 1em;
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: 400px;
-	}
-	h1 {
-		margin-top: 0;
-	}
-	.editor-forms {
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	[name=body] {
-		height: 3em;
-		width: 350px;
-	}
-	.editor-buttons {
-		text-align: center;
-	}
-	.editor-buttons button {
-		height: 3em;
-	}
-	.editor-cancel {
-		width: 20%;
-	}
-	.editor-submit {
-		width: 70%;
+		font-weight: bold;
 	}
 }
