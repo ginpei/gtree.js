@@ -83,6 +83,7 @@ g.task 'webserver', ['build'], ->
 g.task 'build', [
 	'css'
 	'html'
+	'jsexample'
 	'js'
 	'vender'
 ]
