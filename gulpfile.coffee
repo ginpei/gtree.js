@@ -19,15 +19,17 @@ path =
 			'src/coffee/gtree/Path.coffee'
 			'src/coffee/gtree/Node.coffee'
 		]
-		jslib: [
-			'bower_components/react/react.js'
-			'libs/keymapstring.js/keymapstring.js'
-		]
+		vender:
+			js: [
+				'bower_components/react/react.js'
+				'libs/keymapstring.js/keymapstring.js'
+			]
 	dest:
 		css: 'public/css'
 		html: 'public'
 		js: 'public/js'
-		jslib: 'public/js'
+		vender:
+			js: 'public/js'
 
 g.task 'clean', ->
 	del 'public'
@@ -61,10 +63,10 @@ g.task 'js', ->
 		.pipe g.dest(path.dest.js)
 		.pipe livereload()
 
-g.task 'lib', ->
-	g.src path.src.jslib
+g.task 'vender', ->
+	g.src path.src.vender.js
 		.pipe concat('libs.js')
-		.pipe g.dest(path.dest.jslib)
+		.pipe g.dest(path.dest.vender.js)
 
 g.task 'watch', ->
 	livereload.listen()
@@ -83,7 +85,7 @@ g.task 'build', [
 	'css'
 	'html'
 	'js'
-	'lib'
+	'vender'
 ]
 
 g.task 'default', [
