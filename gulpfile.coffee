@@ -12,11 +12,12 @@ path =
 	src:
 		css: 'src/scss/**/*.scss'
 		html: 'src/html/**/*.html'
+		jsexample: 'src/coffee/*.coffee'
 		js: [
-			'src/coffee/Manager.coffee'
-			'src/coffee/Tree.coffee'
-			'src/coffee/Path.coffee'
-			'src/coffee/Node.coffee'
+			'src/coffee/gtree/Manager.coffee'
+			'src/coffee/gtree/Tree.coffee'
+			'src/coffee/gtree/Path.coffee'
+			'src/coffee/gtree/Node.coffee'
 		]
 		jslib: [
 			'bower_components/react/react.js'
@@ -43,6 +44,14 @@ g.task 'html', ->
 		.pipe livereload()
 
 g.task 'js', ->
+	g.src path.src.jsexample
+		.pipe sourcemaps.init()
+		.pipe coffee
+			sourceMap: true
+		.pipe sourcemaps.write()
+		.pipe g.dest(path.dest.js)
+		.pipe livereload()
+
 	g.src path.src.js
 		.pipe sourcemaps.init()
 		.pipe coffee
